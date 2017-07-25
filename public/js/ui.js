@@ -3,30 +3,75 @@
 
     EZSTOCKS.ui = {
         auth: null,
+        defaultPage: 'login-page',
+
+        navMenuConfig: {
+            logged: ['dashboard', 'edit-account', 'logout'],
+            anonymous: ['create-account', 'login']
+        },
 
         init: function (firebaseAuth) {
             this.auth = firebaseAuth;
+
+            this.updateNavMenuOnUserContext();
+
             //add event listener and stuff
             this.bindEvents();
+
+            //default page
+            this.navigateToPage(this.defaultPage);
         },
 
         bindEvents: function () {
-            $('#account-form').on('submit', (e) => {
+            $('#create-account-form').on('submit', (e) => {
                 e.preventDefault();
-                this.registerFormSubmit();
+                this.createAccountFormSubmit();
+            });
+
+            $('body').on('click', '.js-nav-create-account-page', (e) => {
+                e.preventDefault();
+                this.navigateToPage('create-account-page');
+            });
+
+            $('body').on('click', '.js-nav-login-page', (e) => {
+                e.preventDefault();
+                this.navigateToPage('login-page');
             });
         },
 
-        hideLoginSection: function () {
-            $('#account').hide();
-            $('#login-header').hide();
+        navigateToPage: function (pageId) {
+            var $page = $('#' + pageId);
+
+            if ($page.is(':visible')) return;
+
+            this.updateNavMenu(pageId);
+
+            $('.js-page').hide();
+            $page.fadeIn();
         },
 
-        hideCreateAccountSection: function() {
-            //code here
+        updateNavMenuOnUserContext: function () {
+            var item, navItems, i;
+            
+            navItems = this.auth.isLogged() ?
+                this.navMenuConfig.logged
+                : this.navMenuConfig.anonymous;
+
+            $('nav li').hide();
+
+            for (i = 0; i < navItems.length; i += 1) {
+                item = navItems[i];
+
+                $('nav').find('.js-' + item).show();
+            }
         },
 
-        getRegisterInformation: function() {
+        updateNavMenu: function (pageId) {
+            $('nav li').removeClass('active');
+            $('nav .js-nav-' + pageId).addClass('active');
+        },
+
+        getNewAccontInformation: function () {
             var name,
                 email,
                 password;
@@ -42,12 +87,12 @@
             }
         },
 
-        registerFormSubmit: function () {
-            var user = this.getRegisterInformation();
+        createAccountFormSubmit: function () {
+            var user = this.getNewAccontInformation();
 
             this.auth.createUser(user)
                 .then(() => {
-                    //user (what i need to do after I register the user)
+                    this.navigateToPage('dashboard-page');
                 });
         }
     };

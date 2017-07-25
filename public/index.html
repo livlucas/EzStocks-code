@@ -3,161 +3,179 @@
     <head>
         <style type="text/css">
         .nav-wrapper {
-          background-color: #38527a;
+            padding: 0 24px;
+            margin-bottom: 56px;
         }
 
         h4 {
-          color: #aaacaf;
-          padding: 15px;
+            color: #aaacaf;
+            padding: 15px;
         }
 
         .forgot-password {
-          color: black;
+            color: black;
         }
 
+        #login-page .container {
+            margin: 0 auto;
+            padding: 24px 48px;
+            border: 1px solid #EEE;
+            box-sizing: border-box;
+            width: 40%;
+            min-width: 300px;
+            max-width: 420px;
+        }
+
+        .js-page {
+            display: none;
+        }
+
+        .nav-wrapper li {
+            display: none;
+        }
         </style>
 
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>EZSTOCKS</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>EZSTOCKS</title>
 
-      <!--Import Google Icon Font-->
+        <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css"  media="screen,projection"/>
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
     </head>
+
     <body>
-      <div id="message">
-        <nav>
-          <div class="nav-wrapper">
-            <a href="#" class="brand-logo right">EzStocks</a>
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-            <ul id="nav-mobile" class="left hide-on-med-and-down">
-              <li id="dashboard"><a href="">Dashboard</a></li>
-              <li id="create"><a href="">Create Account</a></li>
-              <li id="login"><a href="">Login</a></li>
-              <li id="edit"><a href="">Edit Account</a></li>
+        <nav class="nav-wrapper indigo">
+            <a href="" class="brand-logo left">EzStocks</a>
+
+            <a href="" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class="js-nav-dashboard-page js-dashboard"><a href="">Dashboard</a></li>
+
+                <li class="js-nav-create-account-page js-create-account"><a href="">Create Account</a></li>
+
+                <li class="js-nav-login-page js-login"><a href="">Login</a></li>
+
+                <li class="js-nav-edit-account-page js-edit-account"><a href="">Edit Account</a></li>
+
+                <li class="js-nav-login-page js-logout"><a href="">Logout</a></li>
             </ul>
-          </div>
         </nav>
 
-        <h4>Create Account</h4>
+        <div id="create-account-page" class="container js-page">
+            <form id="create-account-form" class="col s12">
+                <h5 class="indigo-text">Create Account</h5>
 
-        <div class="row">
-          <form id="account-form" class="col s12">
-            <div class="row">
-              <div class="input-field col s6">
-                  <input id="first-name" type="text" class="validate" required autofocus>
+                <div class="row">
+                    <div class="input-field col s6">
+                            <input id="first-name" type="text" class="validate" required autofocus>
 
-                  <label for="first-name">Name</label>
-              </div>
-            </div>
+                            <label for="first-name">Name</label>
+                    </div>
+                </div>
 
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="email" type="email" class="validate" required>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="email" type="email" class="validate" required>
 
-                <label for="email">Email Address</label>
-              </div>
-            </div>
+                        <label for="email">Email Address</label>
+                    </div>
+                </div>
 
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="password" type="password" class="validate" required>
-                <label for="password">Password</label>
-              </div>
-            </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="password" type="password" class="validate" required>
+                        <label for="password">Password</label>
+                    </div>
+                </div>
 
-            <div class="row">
-              <div class="input-field col s6">
-                <button class="waves-effect waves-light btn btn-large indigo" id="submit-button" type="submit">Create account</button>
-              </div>
-            </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <button class="waves-effect waves-light btn btn-large indigo" id="submit-button" type="submit">Create account</button>
+                    </div>
+                </div>
 
-            <div class="input-field col s6">
-              <select multiple>
-                <option value="" disabled selected>Choose your option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-              </select>
-            </div>
-
-          </form>
+                <div class="input-field col s6">
+                    <select multiple>
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                    </select>
+                </div>
+            </form>
         </div>
-    </div>
 
-    <div class="section"></div>
-      <main>
-        <center id="login-header"> 
-          <div class="section"></div>
-            <h5 class="indigo-text">Please, login into your account</h5>
-          <div class="section"></div>
-
-          <div id="account" class="container">
-            <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-
-                <div class='row'>
-                  <div class='input-field col s12'>
-                    <input class='validate' type='email' name='email' id='email' />
-                    <label for='email'>Enter your email</label>
-                  </div>
+        <div id="login-page" class="js-page"> 
+            <div class="container grey lighten-4 z-depth-1">
+                <div class="row">
+                     <h5 class="indigo-text">Login</h5>
                 </div>
 
-                <div class='row'>
-                  <div class='input-field col s12'>
-                    <input class='validate' type='password' name='password' id='password' />
-                    <label for='password'>Enter your password</label>
-                  </div>
-                  <label style='float: right;'>
-                    <a class='forgot-password' href='#!'><b>Forgot Password?</b></a>
-                  </label>
-                </div>
+                <form class="col s12" method="post">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input class="validate" type="email" name="email" id="email" autofocus/>
 
-                <br />
-                <center>
-                  <div class='row'>
-                    <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login</button>
-                  </div>
-                </center>
-              </form>
+                            <label for="email">Enter your email</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input class="validate" type="password" name="password" id="password" />
+                            <label for="password">Enter your password</label>
+                        </div>
+                        <label style="float: right;">
+                            <a class="forgot-password" href="#!"><b>Forgot Password?</b></a>
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        <button type="submit" name="btn_login" class="col s12 btn btn-large waves-effect indigo">Login</button>
+                    </div>
+
+                    <div class="row">
+                        Don't have an account? <a href="" class="js-nav-create-account-page">Sign up</a>
+                    </div>
+                </form>
             </div>
-          </div>
-          <a href="#!">Create account</a>
-        </center>
+        </div>
 
-        <div class="section"></div>
-        <div class="section"></div>
-      </main>
+        <div id="dashboard-page" class="js-page">
+            dashboard =]
+        </div>
 
-    <script type="text/javascript">
-            //initializing namespace
-            window.EZSTOCKS = {};
-    </script>
+        <!-- Scripts area -->
+        <script type="text/javascript">
+                        //initializing namespace
+                        window.EZSTOCKS = {};
+        </script>
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-    <script defer src="/__/firebase/4.1.3/firebase-app.js"></script>
-    <script defer src="/__/firebase/4.1.3/firebase-auth.js"></script>
-    <script defer src="/__/firebase/4.1.3/firebase-database.js"></script>
-    <script defer src="/__/firebase/4.1.3/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/4.1.3/firebase-storage.js"></script>
-    
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+        <!-- Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+        <script defer src="/__/firebase/4.1.3/firebase-app.js"></script>
+        <script defer src="/__/firebase/4.1.3/firebase-auth.js"></script>
+        <script defer src="/__/firebase/4.1.3/firebase-database.js"></script>
+        <script defer src="/__/firebase/4.1.3/firebase-messaging.js"></script>
+        <script defer src="/__/firebase/4.1.3/firebase-storage.js"></script>
+        
+        <!-- initialize the SDK after all desired features are loaded -->
+        <script defer src="/__/firebase/init.js"></script>
 
-    <!-- ui frameworks -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
-    
-    <!--App code-->
-    <script defer src="js/auth.js" type="text/javascript" charset="utf-8"></script>
-    <script defer src="js/database.js" type="text/javascript" charset="utf-8"></script>
-    <script defer src="js/api.js" type="text/javascript" charset="utf-8"></script>
-    <script defer src="js/ui.js" type="text/javascript" charset="utf-8"></script>
-    <script defer src="js/boot.js" type="text/javascript" charset="utf-8"></script>
-  </body>
+        <!-- ui frameworks -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+        
+        <!--App code-->
+        <script defer src="js/auth.js" type="text/javascript" charset="utf-8"></script>
+        <script defer src="js/database.js" type="text/javascript" charset="utf-8"></script>
+        <script defer src="js/api.js" type="text/javascript" charset="utf-8"></script>
+        <script defer src="js/ui.js" type="text/javascript" charset="utf-8"></script>
+        <script defer src="js/boot.js" type="text/javascript" charset="utf-8"></script>
+    </body>
 </html>

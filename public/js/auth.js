@@ -5,6 +5,7 @@
         fauth: null, 
         db: null, 
 
+        _isUserLogged: false,
         _loggedUser: null,
 
         init: function (firebaseAuth, appDb) {
@@ -13,6 +14,11 @@
             this.db = appDb;
 
             //this.bindEvents();
+        },
+
+        isLogged: function () {
+            //change this based on the fauth event
+            return this._isUserLogged;
         },
 
         getLoggedUser: function (cb) {
