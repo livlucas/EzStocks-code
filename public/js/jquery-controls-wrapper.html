@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="input-values.jquery.js"></script>
+		<script type="text/javascript">
+			$(function () {
+				//how to get values from a set of inputs
+				console.log(
+					$('#container').inputValues()
+				);
+				
+				//how to set values in a form
+				$('#container').inputValues({
+					input1: 'input value set',
+					
+					textarea1: 'textarea value set',
+					
+					select: 2,
+					
+					selectMultiple: [1, 3],
+					
+					radio: 4,
+					
+					checkbox: [2, 4],
+					
+					file: 'does/not/work'
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="container">
+            <input type="text" name="input1" value="input value here">
+            <br>
+            
+            <textarea name="textarea1"></textarea>
+            <br>
+            
+            <select name="select">
+                <option></option>
+                <option value="1">&nbsp;&nbsp;&nbsp;&nbsp;1</option>
+                <option value="2">&nbsp;&nbsp;&nbsp;&nbsp;2</option>
+                <option value="3">&nbsp;&nbsp;&nbsp;&nbsp;3</option>
+            </select>
+            <br>
+            
+            <select multiple="multiple" name="selectMultiple">
+                <option value="1">&nbsp;&nbsp;&nbsp;&nbsp;1</option>
+                <option value="2">&nbsp;&nbsp;&nbsp;&nbsp;2</option>
+                <option value="3">&nbsp;&nbsp;&nbsp;&nbsp;3</option>
+            </select>
+            <br>
+            
+            <label><input type="radio" name="radio" value="1">1<label>
+            <label><input type="radio" name="radio" value="2">2<label>
+            <label><input type="radio" name="radio" value="3">3<label>
+            <label><input type="radio" name="radio" value="4">4<label>
+            <br>
+            
+            <label><input type="checkbox" name="checkbox" value="1" checked>1<label>
+            <label><input type="checkbox" name="checkbox" value="2">2<label>
+            <label><input type="checkbox" name="checkbox" value="3">3<label>
+            <label><input type="checkbox" name="checkbox" value="4">4<label>
+            
+            <br>
+            <br>
+            <input type="file" name="file">
+        </div>
+	</body>
+</html>

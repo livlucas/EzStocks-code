@@ -2,8 +2,7 @@
 <html>
     <head>
         <style type="text/css">
-        .nav-wrapper {
-            padding: 0 24px;
+        .navbar-fixed {
             margin-bottom: 56px;
         }
 
@@ -37,8 +36,9 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>EZSTOCKS</title>
+        <title>EzSTocks</title>
 
+        <link rel="icon" href="images/logo.jpeg">
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
@@ -48,25 +48,41 @@
     </head>
 
     <body>
-        <nav class="nav-wrapper indigo">
-            <a href="" class="brand-logo left">EzStocks</a>
+        <div class="navbar-fixed">
+            <nav class="nav-wrapper indigo"> <a href="" class="brand-logo">EzStocks</a>
 
-            <a href="" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <a href="" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li class="js-nav-dashboard-page js-dashboard"><a href="">Dashboard</a></li>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li class="js-user-name">Hi, <span id="nav-display-username">User</span></li>
 
-                <li class="js-nav-create-account-page js-create-account"><a href="">Create Account</a></li>
+                    <li class="js-nav-dashboard-page js-dashboard"><a href="">Dashboard</a></li>
 
-                <li class="js-nav-login-page js-login"><a href="">Login</a></li>
+                    <li class="js-nav-create-account-page js-create-account"><a href="">Create Account</a></li>
 
-                <li class="js-nav-edit-account-page js-edit-account"><a href="">Edit Account</a></li>
+                    <li class="js-nav-login-page js-login"><a href="">Login</a></li>
 
-                <li class="js-user-name">Hi, <span id="nav-display-username">User</span></li>
+                    <li class="js-nav-edit-account-page js-edit-account"><a href="">Edit Account</a></li>
 
-                <li class="js-nav-login-page js-logout"><a href="">Logout</a></li>
-            </ul>
-        </nav>
+                    <li class="js-nav-login-page js-logout"><a href="">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <ul class="side-nav" id="mobile-demo">
+            <li class="js-user-name">Hi, <span id="nav-display-username">User</span></li>
+
+            <li class="js-nav-dashboard-page js-dashboard"><a href="">Dashboard</a></li>
+
+            <li class="js-nav-create-account-page js-create-account"><a href="">Create Account</a></li>
+
+            <li class="js-nav-login-page js-login"><a href="">Login</a></li>
+
+            <li class="js-nav-edit-account-page js-edit-account"><a href="">Edit Account</a></li>
+
+            <li class="js-nav-login-page js-logout"><a href="">Logout</a></li>
+        </ul>
+
 
         <div id="create-account-page" class="container js-page">
             <form id="create-account-form" class="col s12">
@@ -97,17 +113,86 @@
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <button class="waves-effect waves-light btn btn-large indigo" id="submit-button" type="submit">Create account</button>
+                        <select id="select-first-question">
+                          <option value="" disabled selected>Choose a question</option>
+                          <option value="1">What is your pet’s name?</option>
+                          <option value="2">In what city or town does your nearest sibling live?</option>
+                          <option value="3">What's your best friends name?</option>
+                          <option value="4">What's the name of your favorite city?</option>
+                          <option value="5">Who is your childhood sports hero?</option>
+                          <option value="6">What was the make and model of your first car?</option>
+                          <option value="7">In what town was your first job?</option>
+                          <option value="8">What was the name of the company where you had your first job?</option>
+                        </select>
+
+                        <label>Security question 1</label>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="first-answer" type="text" class="validate" required>
+
+                                <label for="first-answer">Answer security question 1</label>
+                        </div>
+                </div>
                     </div>
                 </div>
 
-                <div class="input-field col s6">
-                    <select multiple>
-                        <option value="" disabled selected>Choose your option</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
-                    </select>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select id="select-second-question">
+                          <option value="" disabled selected>Choose a question</option>
+                          <option value="1">What is your pet’s name?</option>
+                          <option value="2">In what city or town does your nearest sibling live?</option>
+                          <option value="3">What's your best friends name?</option>
+                          <option value="4">What's the name of your favorite city?</option>
+                          <option value="5">Who is your childhood sports hero?</option>
+                          <option value="6">What was the make and model of your first car?</option>
+                          <option value="7">In what town was your first job?</option>
+                          <option value="8">What was the name of the company where you had your first job?</option>
+                        </select>
+
+                        <label>Security question 2</label>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="second-answer" type="text" class="validate" required>
+                                <label for="second-answer">Answer security question 2</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select id="select-third-question">
+                          <option value="" disabled selected>Choose a question</option>
+                          <option value="1">What is your pet’s name?</option>
+                          <option value="2">In what city or town does your nearest sibling live?</option>
+                          <option value="3">What's your best friends name?</option>
+                          <option value="4">What's the name of your favorite city?</option>
+                          <option value="5">Who is your childhood sports hero?</option>
+                          <option value="6">What was the make and model of your first car?</option>
+                          <option value="7">In what town was your first job?</option>
+                          <option value="8">What was the name of the company where you had your first job?</option>
+                        </select>
+
+                        <label>Security question 3</label>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="third-answer" type="text" class="validate" required>
+                                <label for="third-answer">Answer security question 3</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <button class="waves-effect waves-light btn btn-large indigo" id="submit-button" type="submit">Create account</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -149,7 +234,271 @@
         </div>
 
         <div id="dashboard-page" class="js-page">
-            dashboard =]
+            <div class="container">
+                <table class="striped">
+                    <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Symbol</th>
+                          <th>Previous Close</th>
+                          <th>Open</th>
+                          <th>Bid</th>
+                          <th>Ask</th>
+                          <th>Day's Range</th>
+                          <th>52 Week Range</th>
+                          <th>Volume</th>
+                          <th>Avg. Volume</th>
+                          <th>Market Cap</th>
+                          <th>Beta</th>
+                          <th>PE Ration</th>
+                          <th>EPS</th>
+                          <th>Earnings Date</th>
+                          <th>Dividend & Yield</th>
+                          <th>Ex Dividend Date</th>
+                          <th>1 Year Target</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td>Google</td>
+                        <td>GOOG</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+
+                      </tr>
+                      <tr>
+                        <td>Facebook</td>
+                        <td>FB</td>
+                        <td>$3.76</td>
+                        <td>Alvin</td>
+                        <td>Eclair</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                      </tr>
+                      <tr>
+                        <td>Aladin</td>
+                        <td>ALAD</td>
+                        <td>$7.00</td>
+                        <td>Alvin</td>
+                        <td>Eclair</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                      </tr>
+
+                      <tr>
+                        <td>Oracle</td>
+                        <td>ORAC</td>
+                        <td>$7.00</td>
+                        <td>Alvin</td>
+                        <td>Eclair</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                      </tr>
+
+                      <tr>
+                        <td>ITU</td>
+                        <td>ITU</td>
+                        <td>$7.00</td>
+                        <td>Alvin</td>
+                        <td>Eclair</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                      </tr>
+
+                      <tr>
+                        <td>United</td>
+                        <td>UNI</td>
+                        <td>$7.00</td>
+                        <td>Alvin</td>
+                        <td>Eclair</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                      </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="edit-account-page" class="container js-page">
+            <form id="edit-account-form" class="col s12">
+                <h5 class="indigo-text">Edit Account</h5>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                            <input id="edit-first-name" type="text" class="validate" required autofocus>
+
+                            <label for="edit-first-name">Name</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="edit-email" type="email" class="validate" required>
+
+                        <label for="edit-email">Email Address</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="edit-password" type="password" class="validate" required>
+                        <label for="edit-password">Password</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select id="edit-select-first-question">
+                          <option value="" disabled selected>Choose a question</option>
+                          <option value="1">What is your pet’s name?</option>
+                          <option value="2">In what city or town does your nearest sibling live?</option>
+                          <option value="3">What's your best friends name?</option>
+                          <option value="4">What's the name of your favorite city?</option>
+                          <option value="5">Who is your childhood sports hero?</option>
+                          <option value="6">What was the make and model of your first car?</option>
+                          <option value="7">In what town was your first job?</option>
+                          <option value="8">What was the name of the company where you had your first job?</option>
+                        </select>
+
+                        <label>Security question 1</label>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="edit-first-answer" type="text" class="validate" required>
+
+                                <label for="edit-first-answer">Answer security question 1</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select id="edit-select-second-question">
+                          <option value="" disabled selected>Choose a question</option>
+                          <option value="1">What is your pet’s name?</option>
+                          <option value="2">In what city or town does your nearest sibling live?</option>
+                          <option value="3">What's your best friends name?</option>
+                          <option value="4">What's the name of your favorite city?</option>
+                          <option value="5">Who is your childhood sports hero?</option>
+                          <option value="6">What was the make and model of your first car?</option>
+                          <option value="7">In what town was your first job?</option>
+                          <option value="8">What was the name of the company where you had your first job?</option>
+                        </select>
+
+                        <label>Security question 2</label>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="edit-second-answer" type="text" class="validate" required>
+                                <label for="edit-second-answer">Answer security question 2</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select id="edit-select-third-question">
+                          <option value="" disabled selected>Choose a question</option>
+                          <option value="1">What is your pet’s name?</option>
+                          <option value="2">In what city or town does your nearest sibling live?</option>
+                          <option value="3">What's your best friends name?</option>
+                          <option value="4">What's the name of your favorite city?</option>
+                          <option value="5">Who is your childhood sports hero?</option>
+                          <option value="6">What was the make and model of your first car?</option>
+                          <option value="7">In what town was your first job?</option>
+                          <option value="8">What was the name of the company where you had your first job?</option>
+                        </select>
+
+                        <label>Security question 3</label>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="edit-third-answer" type="text" class="validate" required>
+                                <label for="edit-third-answer">Answer security question 3</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <button class="waves-effect waves-light btn btn-large indigo" id="update-submit-button" type="submit">Update account</button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <!-- Scripts area -->
@@ -179,5 +528,6 @@
         <script defer src="js/api.js" type="text/javascript" charset="utf-8"></script>
         <script defer src="js/ui.js" type="text/javascript" charset="utf-8"></script>
         <script defer src="js/boot.js" type="text/javascript" charset="utf-8"></script>
+        <script defer src="js/input-values-jquer.js" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>

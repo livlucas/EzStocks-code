@@ -17,6 +17,9 @@
             //add event listener and stuff
             this.bindEvents();
 
+            //materialize init
+            $(".button-collapse").sideNav();
+
             this.auth
             .getInitialUserState()
             .then((user) => {
@@ -38,6 +41,14 @@
             //navigation
             $('body').on('click', '.js-nav-create-account-page', (e) => {
                 e.preventDefault();
+
+                $('#first-name').val('');
+                //focus not working. check this!
+                $('#first-name').focus();
+                $('#email').val('');
+                $('#password').val('');
+
+                $('select').material_select();
                 this.navigateToPage('create-account-page');
             });
 
@@ -49,6 +60,12 @@
             $('body').on('click', '.js-logout', (e) => {
                 e.preventDefault();
                 this.logoutUser();
+            });
+
+            $('body').on('click', '.js-edit-account', (e) => {
+                e.preventDefault();
+                 $('select').material_select();
+                this.navigateToPage('edit-account-page');
             });
 
             //forms
@@ -82,11 +99,14 @@
                 : this.navMenuConfig.anonymous;
 
             $('nav li').hide();
+            $('#mobile-demo li').hide();
+
 
             for (i = 0; i < navItems.length; i += 1) {
                 item = navItems[i];
 
                 $('nav').find('.js-' + item).show();
+                $('#mobile-demo').find('.js-' + item).show();
             }
 
             this.setNavUsername();
@@ -101,14 +121,20 @@
             return {
                 name: $('#first-name').val(),
                 email: $('#email').val(),
-                password: $('#password').val()
+                password: $('#password').val(),
+                question1: $('#select-first-question').val(),
+                answer1: $('#first-answer').val(),
+                question2: $('#select-second-question').val(),
+                answer2: $('#second-answer').val(),
+                question3: $('#select-third-question').val(),
+                answer3: $('#third-answer').val(),
             };
         },
 
         getLoginInformation: function () {
             return {
-                email: $('#login-email').val(),
-                password: $('#login-password').val()
+                email: $('#login-email').val().trim(),
+                password: $('#login-password').val().trim()
             };
         },
 
@@ -121,6 +147,18 @@
                 this.updateNavMenuOnUserContext();
                 this.navigateToPage('dashboard-page');
             });
+        },
+
+        getEditFormInformation: function (user) {
+            $('#edit-first-name').val(user.name);
+            $('#edit-email').val(user.email);
+            $('#edit-password').val(user.password);
+            $('#edit-select-first-question').val(user.question1);
+            $('#edit-first-answer').val(user.answer1);
+            $('#edit-select-second-question').val(user.question2);
+            $('#edit-second-answer').val(user.answer2);
+            $('#edit-select-third-question').val(user.question3);
+            $('#edit-third-answer').val(user.answer3);
         },
 
         setNavUsername: function () {
@@ -150,3 +188,9 @@
         }
     };
 }());
+
+$( document ).ready(function() {
+    $(".dropdown-button").dropdown({
+            hover: false
+        });
+});
