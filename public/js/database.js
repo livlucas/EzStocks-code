@@ -15,6 +15,15 @@
             //this.bindEvents();
         },
 
+        readUserByUid: function (uid) {
+            return this.fdb
+                .ref(collectionNames.users + '/' + uid)
+                .once('value')
+                .then((dbs) => {
+                    return dbs.val();
+                });
+        },
+
         saveUser: function (user, uid) {
             delete user.password;
 
