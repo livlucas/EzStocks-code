@@ -29,6 +29,18 @@
             display: none;
         }
 
+        @media only screen and (min-width : 993px) {
+            .nav-wrapper {
+                padding: 0 24px;
+            }
+        }
+
+        .nav-user-name {
+            opacity: 0.75;
+            padding-right: 12px;
+            padding-left: 12px;
+        }
+
         .nav-wrapper li {
             display: none;
         }
@@ -53,8 +65,8 @@
 
                 <a href="" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li class="js-user-name">Hi, <span id="nav-display-username">User</span></li>
+                <ul id="nav-mobile" class="right hide-on-med-and-down js-nav-menu">
+                    <li class="js-user-name nav-user-name">Hi, <span id="nav-display-username">User</span></li>
 
                     <li class="js-nav-dashboard-page js-dashboard"><a href="">Dashboard</a></li>
 
@@ -69,8 +81,8 @@
             </nav>
         </div>
 
-        <ul class="side-nav" id="mobile-demo">
-            <li class="js-user-name">Hi, <span id="nav-display-username">User</span></li>
+        <ul class="side-nav js-nav-menu" id="mobile-demo">
+            <li class="js-user-name nav-user-name">Hi, <span id="nav-display-username">User</span></li>
 
             <li class="js-nav-dashboard-page js-dashboard"><a href="">Dashboard</a></li>
 
@@ -90,14 +102,14 @@
 
                 <div class="row">
                     <div class="input-field col s6">
-                            <input id="first-name" type="text" class="validate" required autofocus>
+                            <input id="first-name" type="text" class="validate" required>
 
                             <label for="first-name">Name</label>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                         <input id="email" type="email" class="validate" required>
 
                         <label for="email">Email Address</label>
@@ -105,14 +117,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                         <input id="password" type="password" class="validate" required>
                         <label for="password">Password</label>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                         <select id="select-first-question">
                           <option value="" disabled selected>Choose a question</option>
                           <option value="1">What is your pet’s name?</option>
@@ -128,7 +140,7 @@
                         <label>Security question 1</label>
 
                         <div class="row">
-                            <div class="input-field col s12">
+                            <div class="input-field col s12 m6">
                                 <input id="first-answer" type="text" class="validate" required>
 
                                 <label for="first-answer">Answer security question 1</label>
@@ -138,7 +150,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                         <select id="select-second-question">
                           <option value="" disabled selected>Choose a question</option>
                           <option value="1">What is your pet’s name?</option>
@@ -154,7 +166,7 @@
                         <label>Security question 2</label>
 
                         <div class="row">
-                            <div class="input-field col s12">
+                            <div class="input-field col s12 m6">
                                 <input id="second-answer" type="text" class="validate" required>
                                 <label for="second-answer">Answer security question 2</label>
                             </div>
@@ -164,7 +176,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                         <select id="select-third-question">
                           <option value="" disabled selected>Choose a question</option>
                           <option value="1">What is your pet’s name?</option>
@@ -180,7 +192,7 @@
                         <label>Security question 3</label>
 
                         <div class="row">
-                            <div class="input-field col s12">
+                            <div class="input-field col s12 m6">
                                 <input id="third-answer" type="text" class="validate" required>
                                 <label for="third-answer">Answer security question 3</label>
                             </div>
@@ -190,7 +202,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                         <button class="waves-effect waves-light btn btn-large indigo" id="submit-button" type="submit">Create account</button>
                     </div>
                 </div>
@@ -391,35 +403,35 @@
         </div>
 
         <div id="edit-account-page" class="container js-page">
-            <form id="edit-account-form" class="col s12">
+            <form id="edit-account-form">
                 <h5 class="indigo-text">Edit Account</h5>
 
                 <div class="row">
-                    <div class="input-field col s6">
-                            <input id="edit-first-name" type="text" class="validate" required autofocus>
+                    <div class="input-field col s12 m9 l6">
+                            <input id="edit-first-name" name="name" type="text" class="validate" required>
 
                             <label for="edit-first-name">Name</label>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input id="edit-email" type="email" class="validate" required>
+                    <div class="input-field col s12 m9 l6">
+                        <input id="edit-email" name="email" type="email" class="validate" required>
 
                         <label for="edit-email">Email Address</label>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input id="edit-password" type="password" class="validate" required>
+                    <div class="input-field col s12 m9 l6">
+                        <input id="edit-password" name="password" type="password" class="validate" required>
                         <label for="edit-password">Password</label>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
-                        <select id="edit-select-first-question">
+                    <div class="input-field col s12 m9 l6">
+                        <select id="edit-select-first-question" name="question1">
                           <option value="" disabled selected>Choose a question</option>
                           <option value="1">What is your pet’s name?</option>
                           <option value="2">In what city or town does your nearest sibling live?</option>
@@ -432,20 +444,20 @@
                         </select>
 
                         <label>Security question 1</label>
-
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="edit-first-answer" type="text" class="validate" required>
-
-                                <label for="edit-first-answer">Answer security question 1</label>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
-                        <select id="edit-select-second-question">
+                    <div class="input-field col s12 m9 l6">
+                        <input id="edit-first-answer" name="answer1" type="text" class="validate" required>
+
+                        <label for="edit-first-answer">Answer security question 1</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m9 l6">
+                        <select id="edit-select-second-question" name="question2">
                           <option value="" disabled selected>Choose a question</option>
                           <option value="1">What is your pet’s name?</option>
                           <option value="2">In what city or town does your nearest sibling live?</option>
@@ -458,19 +470,19 @@
                         </select>
 
                         <label>Security question 2</label>
-
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="edit-second-answer" type="text" class="validate" required>
-                                <label for="edit-second-answer">Answer security question 2</label>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
-                        <select id="edit-select-third-question">
+                    <div class="input-field col s12 m9 l6">
+                        <input id="edit-second-answer" name="answer2" type="text" class="validate" required>
+                        <label for="edit-second-answer">Answer security question 2</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m9 l6">
+                        <select id="edit-select-third-question" name="question3">
                           <option value="" disabled selected>Choose a question</option>
                           <option value="1">What is your pet’s name?</option>
                           <option value="2">In what city or town does your nearest sibling live?</option>
@@ -483,18 +495,18 @@
                         </select>
 
                         <label>Security question 3</label>
-
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="edit-third-answer" type="text" class="validate" required>
-                                <label for="edit-third-answer">Answer security question 3</label>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m9 l6">
+                        <input id="edit-third-answer" name="answer3" type="text" class="validate" required>
+                        <label for="edit-third-answer">Answer security question 3</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m9 l6">
                         <button class="waves-effect waves-light btn btn-large indigo" id="update-submit-button" type="submit">Update account</button>
                     </div>
                 </div>
@@ -520,6 +532,7 @@
 
         <!-- ui frameworks -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="js/input-values.jquery.js" type="text/javascript" charset="utf-8"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
         
         <!--App code-->
@@ -527,7 +540,6 @@
         <script defer src="js/database.js" type="text/javascript" charset="utf-8"></script>
         <script defer src="js/api.js" type="text/javascript" charset="utf-8"></script>
         <script defer src="js/ui.js" type="text/javascript" charset="utf-8"></script>
-        <script defer src="js/boot.js" type="text/javascript" charset="utf-8"></script>
-        <script defer src="js/input-values-jquer.js" type="text/javascript" charset="utf-8"></script>
+        <script defer src="js/boot.js" type="text/javascript" charset="utf-8"></script>        
     </body>
 </html>

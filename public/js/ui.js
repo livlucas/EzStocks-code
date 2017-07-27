@@ -17,17 +17,16 @@
             //add event listener and stuff
             this.bindEvents();
 
-            //materialize init
-            $(".button-collapse").sideNav();
+            this.initMaterialize();
 
+            //initing user state
             this.auth
             .getInitialUserState()
             .then((user) => {
                 var pageToNav = this.defaultPage;
 
-                console.log(user);
-
                 this.updateNavMenuOnUserContext();
+                this.updateForms();
 
                 if (user) {
                     pageToNav = this.loggedPage;
@@ -35,6 +34,16 @@
                 //default page
                 this.navigateToPage(pageToNav);
             });
+        },
+
+        initMaterialize: function () {
+            //materialize side nav
+            $('.button-collapse').sideNav({
+                closeOnClick: true
+            });
+
+            //select forms
+            $('select').material_select();
         },
 
         bindEvents: function () {
@@ -62,10 +71,16 @@
                 this.logoutUser();
             });
 
-            $('body').on('click', '.js-edit-account', (e) => {
+            $('body').on('click', '.js-nav-edit-account-page', (e) => {
                 e.preventDefault();
-                 $('select').material_select();
+                 
                 this.navigateToPage('edit-account-page');
+            });
+
+            $('body').on('click', '.js-nav-dashboard-page', (e) =>{
+                e.preventDefault();
+                 
+                this.navigateToPage('dashboard-page');
             });
 
             //forms
@@ -86,9 +101,14 @@
             if ($page.is(':visible')) return;
 
             this.updateNavMenu(pageId);
+            this.updateForms();
 
             $('.js-page').hide();
             $page.fadeIn();
+
+            $('body').scrollTop(0);
+
+            $('form:visible input:first').focus();
         },
 
         updateNavMenuOnUserContext: function () {
@@ -113,8 +133,26 @@
         },
 
         updateNavMenu: function (pageId) {
-            $('nav li').removeClass('active');
-            $('nav .js-nav-' + pageId).addClass('active');
+            $('.js-nav-menu li').removeClass('active');
+            $('.js-nav-menu .js-nav-' + pageId).addClass('active');
+        },
+
+        setNavUsername: function () {
+            var user = this.auth.getLoggedUser();
+
+            if (!user) return;
+
+            $('#nav-display-username').text(user.name);
+        },
+
+        updateForms: function () {
+            var user = this.auth.getLoggedUser();
+
+            if (!user) return;
+
+            this.clearLoginForm();
+            this.clearSignUpForm();
+            this.fillEditForm();
         },
 
         getNewAccontInformation: function () {
@@ -144,30 +182,39 @@
             this.auth
             .login(userData)
             .then((user) => {
+                if (!user) {
+                    $('#login-form input[text]:first').focus();
+                    return;
+                }
                 this.updateNavMenuOnUserContext();
                 this.navigateToPage('dashboard-page');
             });
         },
 
-        getEditFormInformation: function (user) {
-            $('#edit-first-name').val(user.name);
-            $('#edit-email').val(user.email);
-            $('#edit-password').val(user.password);
-            $('#edit-select-first-question').val(user.question1);
-            $('#edit-first-answer').val(user.answer1);
-            $('#edit-select-second-question').val(user.question2);
-            $('#edit-second-answer').val(user.answer2);
-            $('#edit-select-third-question').val(user.question3);
-            $('#edit-third-answer').val(user.answer3);
+        //form updates
+        clearLoginForm: function () {
+            $('#login-form')[0].reset();
         },
 
-        setNavUsername: function () {
+        clearSignUpForm: function () {
+            $('#create-account-form')[0].reset();
+        },
+
+        fillEditForm: function () {
+            var $form = $('#edit-account-form');
+
             var user = this.auth.getLoggedUser();
 
-            if (!user) return;
+            user.password = '';
 
-            $('#nav-display-username').text(user.name);
+            $form.inputValues(user);
+
+            //materialize updates required
+            Materialize.updateTextFields();
+            $form.find('select').material_select('update');
         },
+
+
 
         createAccountFormSubmit: function () {
             var user = this.getNewAccontInformation();
