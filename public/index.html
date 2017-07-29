@@ -60,6 +60,7 @@
     </head>
 
     <body>
+        <!-- global nav -->
         <div class="navbar-fixed">
             <nav class="nav-wrapper indigo"> <a href="" class="brand-logo">EzStocks</a>
 
@@ -95,13 +96,13 @@
             <li class="js-nav-login-page js-logout"><a href="">Logout</a></li>
         </ul>
 
-
+        <!-- pages -->
         <div id="create-account-page" class="container js-page">
             <form id="create-account-form" class="col s12">
                 <h5 class="indigo-text">Create Account</h5>
 
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m9 l6">
                             <input id="first-name" type="text" class="validate" required>
 
                             <label for="first-name">Name</label>
@@ -109,7 +110,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s12 m6">
+                    <div class="input-field col s12 m9 l6">
                         <input id="email" type="email" class="validate" required>
 
                         <label for="email">Email Address</label>
@@ -117,14 +118,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s12 m6">
+                    <div class="input-field col s12 m9 l6">
                         <input id="password" type="password" class="validate" required>
                         <label for="password">Password</label>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s12 m6">
+                    <div class="input-field col s12 m9 l6">
                         <select id="select-first-question">
                           <option value="" disabled selected>Choose a question</option>
                           <option value="1">What is your pet’s name?</option>
@@ -138,19 +139,19 @@
                         </select>
 
                         <label>Security question 1</label>
-
-                        <div class="row">
-                            <div class="input-field col s12 m6">
-                                <input id="first-answer" type="text" class="validate" required>
-
-                                <label for="first-answer">Answer security question 1</label>
-                        </div>
-                </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s12 m6">
+                    <div class="input-field col s12 m9 l6">
+                        <input id="first-answer" type="text" class="validate" required>
+
+                        <label for="first-answer">Answer security question 1</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m9 l6">
                         <select id="select-second-question">
                           <option value="" disabled selected>Choose a question</option>
                           <option value="1">What is your pet’s name?</option>
@@ -164,19 +165,19 @@
                         </select>
 
                         <label>Security question 2</label>
-
-                        <div class="row">
-                            <div class="input-field col s12 m6">
-                                <input id="second-answer" type="text" class="validate" required>
-                                <label for="second-answer">Answer security question 2</label>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s12 m6">
+                    <div class="input-field col s12 m9 l6">
+                        <input id="second-answer" type="text" class="validate" required>
+
+                        <label for="second-answer">Answer security question 2</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m9 l6">
                         <select id="select-third-question">
                           <option value="" disabled selected>Choose a question</option>
                           <option value="1">What is your pet’s name?</option>
@@ -190,19 +191,19 @@
                         </select>
 
                         <label>Security question 3</label>
-
-                        <div class="row">
-                            <div class="input-field col s12 m6">
-                                <input id="third-answer" type="text" class="validate" required>
-                                <label for="third-answer">Answer security question 3</label>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s12 m6">
+                    <div class="input-field col s12 m9 l6">
+                        <input id="third-answer" type="text" class="validate" required>
+                        
+                        <label for="third-answer">Answer security question 3</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m9 l6">
                         <button class="waves-effect waves-light btn btn-large indigo" id="submit-button" type="submit">Create account</button>
                     </div>
                 </div>
