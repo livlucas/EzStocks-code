@@ -215,7 +215,6 @@
         },
 
 
-
         createAccountFormSubmit: function () {
             var user = this.getNewAccontInformation();
 
