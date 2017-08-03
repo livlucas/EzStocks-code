@@ -18,7 +18,7 @@
 
     //dom loaded
     $(function () {
-        ns.ui.init(ns.auth);
+        ns.ui.init(ns.auth, ns.database);
     });
 
     //DEBUG ONLY

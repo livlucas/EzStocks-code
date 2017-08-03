@@ -59,6 +59,10 @@
             return this._loggedUser;
         },
 
+        getLoggedUserUid: function () {
+            return this.fauth.currentUser.uid;
+        },
+
         login: function(user) {
             return this.fauth
             .signInWithEmailAndPassword(
@@ -93,5 +97,16 @@
                 .then(() => this._setUser(user))
             );
         },
+
+        updateLoggedUserData: function (user) {
+            Object.keys(this._loggedUser)
+            .forEach((prop) => {
+                if (user.hasOwnProperty(prop) && (user[prop] !== undefined)) {
+                    this._loggedUser[prop] = user[prop];
+                }
+            });
+
+            return this._loggedUser;
+        }
     };
 }());

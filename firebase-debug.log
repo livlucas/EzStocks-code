@@ -1,36 +1,63 @@
-[debug] [2017-08-01T02:21:24.441Z] ----------------------------------------------------------------------
-[debug] [2017-08-01T02:21:24.443Z] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
-[debug] [2017-08-01T02:21:24.444Z] CLI Version:  3.9.1
-[debug] [2017-08-01T02:21:24.444Z] Platform:     darwin
-[debug] [2017-08-01T02:21:24.444Z] Node Version: v6.10.3
-[debug] [2017-08-01T02:21:24.444Z] Time:         Mon Jul 31 2017 19:21:24 GMT-0700 (PDT)
-[debug] [2017-08-01T02:21:24.444Z] ----------------------------------------------------------------------
+[debug] [2017-08-03T03:59:53.768Z] ----------------------------------------------------------------------
+[debug] [2017-08-03T03:59:53.771Z] Command:      /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2017-08-03T03:59:53.771Z] CLI Version:  3.9.1
+[debug] [2017-08-03T03:59:53.772Z] Platform:     darwin
+[debug] [2017-08-03T03:59:53.772Z] Node Version: v6.10.3
+[debug] [2017-08-03T03:59:53.772Z] Time:         Wed Aug 02 2017 20:59:53 GMT-0700 (PDT)
+[debug] [2017-08-03T03:59:53.772Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2017-08-01T02:21:24.460Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2017-08-01T02:21:24.460Z] > authorizing via signed-in user
-[debug] [2017-08-01T02:21:24.462Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2017-08-01T02:21:24.462Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/m6M8-OUfImgSonYd3Pp6FE16Ws9yTYpI1Ob9NTPqnm3sFX-aZPa4zmkrt0l1Cb0Z',
+[debug] [2017-08-03T03:59:53.786Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-08-03T03:59:53.786Z] > authorizing via signed-in user
+[debug] [2017-08-03T03:59:53.788Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-08-03T03:59:53.788Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/m6M8-OUfImgSonYd3Pp6FE16Ws9yTYpI1Ob9NTPqnm3sFX-aZPa4zmkrt0l1Cb0Z',
   client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
   client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
   grant_type: 'refresh_token',
   scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Mon Jul 31 2017 19:21:24 GMT-0700 (PDT)
-[debug] [2017-08-01T02:21:24.655Z] <<< HTTP RESPONSE 200
-[debug] [2017-08-01T02:21:24.658Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/ezstocks-f62f9  
- Mon Jul 31 2017 19:21:24 GMT-0700 (PDT)
-[debug] [2017-08-01T02:21:25.198Z] <<< HTTP RESPONSE 200
-[debug] [2017-08-01T02:21:25.200Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/ezstocks-f62f9/tokens  
- Mon Jul 31 2017 19:21:25 GMT-0700 (PDT)
-[debug] [2017-08-01T02:21:25.582Z] <<< HTTP RESPONSE 200
+ Wed Aug 02 2017 20:59:53 GMT-0700 (PDT)
+[debug] [2017-08-03T03:59:53.933Z] <<< HTTP RESPONSE 200
+[debug] [2017-08-03T03:59:53.936Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/ezstocks-f62f9  
+ Wed Aug 02 2017 20:59:53 GMT-0700 (PDT)
+[debug] [2017-08-03T03:59:54.886Z] <<< HTTP RESPONSE 200
+[debug] [2017-08-03T03:59:54.887Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/ezstocks-f62f9/tokens  
+ Wed Aug 02 2017 20:59:54 GMT-0700 (PDT)
+[debug] [2017-08-03T03:59:55.522Z] <<< HTTP RESPONSE 200
 [info] 
-[info] === Serving from '/Users/livlucas/capstone'...
+[info] === Deploying to 'ezstocks-f62f9'...
 [info] 
-[debug] [2017-08-01T02:21:25.589Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/ezstocks-f62f9  
- Mon Jul 31 2017 19:21:25 GMT-0700 (PDT)
-[debug] [2017-08-01T02:21:26.020Z] <<< HTTP RESPONSE 200
-[debug] [2017-08-01T02:21:26.021Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/169311396518/clients/_:getWebAppConfig  
- Mon Jul 31 2017 19:21:26 GMT-0700 (PDT)
-[debug] [2017-08-01T02:21:26.508Z] <<< HTTP RESPONSE 200
-[info] i  hosting: Serving hosting files from: public
-[info] ✔  hosting: Local server: http://localhost:5000
-
+[info] i  deploying database, functions, hosting
+[info] ✔  database: rules ready to deploy.
+[debug] [2017-08-03T03:59:56.324Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "dependencies": {
+    "firebase-admin": "~4.2.1",
+    "firebase-functions": "^0.5.7"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[info] i  runtimeconfig: ensuring necessary APIs are enabled...
+[debug] [2017-08-03T03:59:56.326Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/ezstocks-f62f9?view=CONSUMER_VIEW  
+ Wed Aug 02 2017 20:59:56 GMT-0700 (PDT)
+[debug] [2017-08-03T03:59:56.327Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/ezstocks-f62f9?view=CONSUMER_VIEW  
+ Wed Aug 02 2017 20:59:56 GMT-0700 (PDT)
+[debug] [2017-08-03T03:59:57.055Z] <<< HTTP RESPONSE 200
+[info] ✔  runtimeconfig: all necessary APIs are enabled
+[debug] [2017-08-03T03:59:57.314Z] <<< HTTP RESPONSE 200
+[info] ✔  functions: all necessary APIs are enabled
+[debug] [2017-08-03T03:59:57.315Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/ezstocks-f62f9  
+ Wed Aug 02 2017 20:59:57 GMT-0700 (PDT)
+[debug] [2017-08-03T03:59:57.316Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/ezstocks-f62f9/apiKeys  
+ Wed Aug 02 2017 20:59:57 GMT-0700 (PDT)
+[debug] [2017-08-03T03:59:58.171Z] <<< HTTP RESPONSE 200
+[debug] [2017-08-03T03:59:58.226Z] <<< HTTP RESPONSE 200
+[info] i  functions: preparing functions directory for uploading...
+[debug] [2017-08-03T04:00:00.659Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/ezstocks-f62f9/configs  
+ Wed Aug 02 2017 21:00:00 GMT-0700 (PDT)
+[debug] [2017-08-03T04:00:00.947Z] <<< HTTP RESPONSE 200
+[info] i  hosting: preparing public directory for upload...
+[debug] [2017-08-03T04:00:02.058Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/ezstocks-f62f9/uploads/-KqaEzwZwUrCnJbENgZ4?fileCount=300&message=  
+ Wed Aug 02 2017 21:00:02 GMT-0700 (PDT)
+[debug] [2017-08-03T04:00:10.675Z] <<< HTTP RESPONSE 200
+[debug] [2017-08-03T04:00:10.676Z] [hosting] .tgz uploaded successfully, waiting for extraction

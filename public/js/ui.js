@@ -3,6 +3,7 @@
 
     EZSTOCKS.ui = {
         auth: null,
+        db: null,
         defaultPage: 'login-page',
         loggedPage: 'dashboard-page',
 
@@ -11,8 +12,9 @@
             anonymous: ['create-account', 'login']
         },
 
-        init: function (auth) {
+        init: function (auth, db) {
             this.auth = auth;
+            this.db = db;
 
             //add event listener and stuff
             this.bindEvents();
@@ -92,6 +94,11 @@
             $('#login-form').on('submit', (e) => {
                 e.preventDefault();
                 this.loginFormSubmit();
+            });
+
+            $('#edit-account-form').on('submit', (e) => {
+                e.preventDefault();
+                this.editFormSubmit();
             });
         },
 
@@ -212,6 +219,30 @@
             //materialize updates required
             Materialize.updateTextFields();
             $form.find('select').material_select('update');
+        },
+
+        editFormSubmit: function () {
+            var $form,
+                user, uid;
+
+            $form = $('#edit-account-form');
+            user = $form.inputValues();
+
+            delete user.email;
+
+            user = this.auth.updateLoggedUserData(user);
+            uid = this.auth.getLoggedUserUid();
+
+            this.db.saveUser(user, uid)
+            .then(() => {
+                //updating app state
+                this.updateNavMenuOnUserContext();
+                this.updateForms();
+
+                //navigating to dashboard
+                this.navigateToPage('dashboard-page');
+                Materialize.toast('Updated succesfully', 4000);
+            });
         },
 
 
