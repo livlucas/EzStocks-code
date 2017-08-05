@@ -15,6 +15,11 @@
             display: none;
         }
 
+        .no-stock,
+        .no-trending {
+            padding: 24px;
+        }
+
         #dashboard-page {
             margin-top: -24px;
         }
@@ -394,302 +399,29 @@
 
                 <div class="row">
                     <div class="col s12 m7 l7">
-                        <div class="card">
+                        <div id="favorites-panel" class="card">
                             <div class="card-content">
                                 <span class="card-title indigo-text"><i class="material-icons">star_border</i> Favorite Stocks</span>
                                 
-                                <ul class="collection">
-                                    <li class="collection-item stock-item neg">
-                                        <i class="material-icons delete" title="Remove stock from favorite">close</i>
-                                        <h6 class="stock-title grey-text text-darken-2">Russel 2000 Index (^RUT)</h6>
+                                <div class="no-stock">
+                                    <h6>You have no favorite</h6>
+                                </div>
 
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            1,425.80 
-                                            <span class="stock-change">-4.36</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                1,425.80
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                1,432.80
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                1,429.80
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    
-                                    <li class="collection-item stock-item">
-                                        <i class="material-icons delete" title="Remove stock from favorite">close</i>
-                                        <h6 class="stock-title grey-text text-darken-2">Google (GOOG)</h6>
-
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            930.83
-                                            <span class="stock-change">+0.33</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                930.50
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                937.45
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                929.26
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="collection-item stock-item">
-                                        <i class="material-icons delete" title="Remove stock from favorite">close</i>
-                                        <h6 class="stock-title grey-text text-darken-2">Facebook (FB)</h6>
-
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            169.86 
-                                            <span class="stock-change">+0.61</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                169.25
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                170.47
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                169.05
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="collection-item stock-item">
-                                        <i class="material-icons delete" title="Remove stock from favorite">close</i>
-                                        <h6 class="stock-title grey-text text-darken-2">Apple (AAPL)</h6>
-
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            150.05 
-                                            <span class="stock-change">-+1.32</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                148.73
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                150.22
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                148.41
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="collection-item stock-item">
-                                        <i class="material-icons delete" title="Remove stock from favorite">close</i>
-                                        <h6 class="stock-title grey-text text-darken-2">Amazon.com, Inc. (AMZN)</h6>
-
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            996.19 
-                                            <span class="stock-change">+8.41</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                987.78
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                1,006.40
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                991.58
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <ul class="collection"></ul>
                             </div>
                         </div>
                     </div>
 
                     <div class="col s12 m5 l5">
-                        <div class="card">
+                        <div id="trending-panel" class="card">
                             <div class="card-content">
                                 <span class="card-title"><i class="material-icons">whatshot</i> Trending</span>
 
-                                <ul class="collection">
-                                    <li class="collection-item stock-item neg">
-                                        <i class="material-icons add-stock" title="Add stock to favorite">add</i>
+                                <div class="no-stock">
+                                    <h6>No Trending Stocks found!</h6>
+                                </div>
 
-                                        <h6 class="stock-title grey-text text-darken-2">Herbalife Ltd. (HLF)</h6>
-
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            66.50 
-                                            <span class="stock-change">-0.01</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                66.51
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                66.72
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                65.11
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="collection-item stock-item">
-                                        <i class="material-icons delete" title="Remove stock from favorite">close</i>
-                                        <h6 class="stock-title grey-text text-darken-2">FireEye, Inc. (FEYE)</h6>
-
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            14.69 
-                                            <span class="stock-change">-+0.06</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                14.63
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                14.78
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                14.42
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="collection-item stock-item">
-                                        <i class="material-icons delete" title="Remove stock from favorite">close</i>
-                                        <h6 class="stock-title grey-text text-darken-2">Intel Corporation (INTC)</h6>
-
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            36.35 
-                                            <span class="stock-change">+0.88</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                35.47
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                36.43
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                35.57
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="collection-item stock-item neg">
-                                        <i class="material-icons delete" title="Remove stock from favorite">close</i>
-                                        <h6 class="stock-title grey-text text-darken-2">Under Armour, Inc. (UA)</h6>
-
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            16.23 
-                                            <span class="stock-change">-1.88</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                18.11
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                17.19
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                16.15
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                     <li class="collection-item stock-item neg">
-                                        <i class="material-icons delete" title="Remove stock from favorite">close</i>
-                                        <h6 class="stock-title grey-text text-darken-2">Netflix, Inc. (NFLX)</h6>
-
-                                        <div class="stock-current-value">
-                                            <i class="material-icons"><b></b></i>
-                                            182.03 
-                                            <span class="stock-change">+0.37</span>
-                                        </div>
-
-                                        <div class="stock-details">
-                                            <div class="stock-detail">
-                                                181.66
-                                                <span class="stock-label">Closed price</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                184.62
-                                                <span class="stock-label">Day's high</span>
-                                            </div>
-
-                                            <div class="stock-detail">
-                                                181.43
-                                                <span class="stock-label">Day's low</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <ul class="collection"></ul>
                             </div>
                         </div>
                     </div>
@@ -802,6 +534,50 @@
             </form>
         </div>
 
+
+        <!-- dynamic html templates -->
+        <!-- 
+            isFavorite
+            isNegative
+
+            displayName: stock name + stock symbol
+            stock
+        -->
+        <script id="stock-item-template" type="text/x-handlebars-template">
+            <li class="collection-item stock-item {{#if isNegative}} neg {{/if}}">
+                {{#if isFavorite}}
+                    <i class="material-icons delete" title="Remove stock from favorites">close</i>
+                {{else}}
+                    <i class="material-icons add-stock" title="Add stock to favorites">add</i>
+                {{/if}}
+
+                <h6 class="stock-title grey-text text-darken-2">{{displayName}}</h6>
+
+                <div class="stock-current-value">
+                    <i class="material-icons"><b></b></i>
+                    {{formatNumber stock.lastPrice style="currency" currency="USD"}} 
+                    <span class="stock-change">{{formatNumber stock.change style="currency" currency="USD"}}</span>
+                </div>
+
+                <div class="stock-details">
+                    <div class="stock-detail">
+                        {{formatNumber stock.closedPrice style="currency" currency="USD"}}
+                        <span class="stock-label">Closed price</span>
+                    </div>
+
+                    <div class="stock-detail">
+                        {{formatNumber stock.daysHigh style="currency" currency="USD"}}
+                        <span class="stock-label">Day's high</span>
+                    </div>
+
+                    <div class="stock-detail">
+                        {{formatNumber stock.daysLow style="currency" currency="USD"}}
+                        <span class="stock-label">Day's low</span>
+                    </div>
+                </div>
+            </li>
+        </script>
+
         <!-- Scripts area -->
         <script type="text/javascript">
             //initializing namespace
@@ -822,6 +598,8 @@
         <!-- ui frameworks -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/input-values.jquery.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
+        <script src="js/handlebars-intl.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
         
         <!--App code-->
@@ -829,6 +607,6 @@
         <script defer src="js/database.js" type="text/javascript" charset="utf-8"></script>
         <script defer src="js/api.js" type="text/javascript" charset="utf-8"></script>
         <script defer src="js/ui.js" type="text/javascript" charset="utf-8"></script>
-        <script defer src="js/boot.js" type="text/javascript" charset="utf-8"></script>        
+        <script defer src="js/boot.js" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>

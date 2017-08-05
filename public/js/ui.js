@@ -12,14 +12,26 @@
             anonymous: ['create-account', 'login']
         },
 
+        templates:{},
+
+        data: {
+            favorites: null,
+            trending: null
+        },
+
+        //==========[ initializations ]===========
         init: function (auth, db) {
             this.auth = auth;
             this.db = db;
 
-            //add event listener and stuff
-            this.bindEvents();
+            //template engine
+            this.initHandlebars();
 
+            //ui framework
             this.initMaterialize();
+
+            this.compileTemplates();
+            this.bindEvents();
 
             //initing user state
             this.auth
@@ -38,6 +50,10 @@
             });
         },
 
+        initHandlebars: function () {
+            HandlebarsIntl.registerWith(Handlebars);
+        },
+
         initMaterialize: function () {
             //materialize side nav
             $('.button-collapse').sideNav({
@@ -46,6 +62,36 @@
 
             //select forms
             $('select').material_select();
+
+            //dropdown forms
+            $(".dropdown-button").dropdown({
+                hover: false
+            });
+
+            //TODO: need refactoring later
+            $('#stock-search').autocomplete({
+                data: {
+                  "Apple": null,
+                  'Adobe': null,
+                  'Application': null,
+                  "Microsoft": null,
+                  "Google": 'https://placehold.it/250x250',
+                  'Russel': null,
+                  'Dow Jones': null,
+                },
+                onAutocomplete: (value) => {}, // on select value
+                limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+                minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+            });
+        },
+
+        compileTemplates: function () {
+            var html;
+
+            html = $('#stock-item-template').html();
+            this.templates.stockItem = Handlebars.compile(html);
+
+            //add more here
         },
 
         bindEvents: function () {
@@ -100,8 +146,29 @@
                 e.preventDefault();
                 this.editFormSubmit();
             });
+
+            $('#favorites-panel').on('click', '.delete', (e) => {
+                var target = $(e.target);
+
+                e.preventDefault();
+                console.log(this.data.favorites);
+                //inserir atributo pra facilitar a minha vida
+                //manipular a lista de favorites e renderiza-la aqui.a lista tá em data.
+                // target.parent().remove();
+                console.log(target);
+            });
+
+            $('#trending-panel').on('click', '.add-stock', (e) => {
+                var target = $(e.target);
+
+                e.preventDefault();
+                //after saving on database update updateStockList
+                this.updateStockList();
+            });
         },
 
+
+        //==========[ app functions ]===========
         navigateToPage: function (pageId) {
             var $page = $('#' + pageId);
 
@@ -109,6 +176,8 @@
 
             this.updateNavMenu(pageId);
             this.updateForms();
+            this.updateStockList(pageId);
+            this.updateTrendingList(pageId);
 
             $('.js-page').hide();
             $page.fadeIn();
@@ -144,6 +213,28 @@
             $('.js-nav-menu .js-nav-' + pageId).addClass('active');
         },
 
+        updateStockList: function (pageId) {
+            if (pageId !== 'dashboard-page') return;
+
+            this.db.getStocks()
+            .then((stocks) => {
+                this.data.favorites = stocks;
+
+                this.renderFavorites(stocks);
+            });
+        },
+
+        updateTrendingList: function (pageId) {
+            if (pageId !== 'dashboard-page') return;
+
+            this.db.getTrending()
+            .then((trendings) => {
+                this.data.trending = trendings;
+
+                this.renderTrending(trendings);
+            });
+        },
+
         setNavUsername: function () {
             var user = this.auth.getLoggedUser();
 
@@ -162,6 +253,15 @@
             this.fillEditForm();
         },
 
+        logoutUser: function () {
+            this.auth.logout()
+            .then(() => {
+                this.updateNavMenuOnUserContext();
+            });
+        },
+
+
+        //==========[ page specific functions ]===========
         getNewAccontInformation: function () {
             return {
                 name: $('#first-name').val(),
@@ -198,7 +298,6 @@
             });
         },
 
-        //form updates
         clearLoginForm: function () {
             $('#login-form')[0].reset();
         },
@@ -245,7 +344,6 @@
             });
         },
 
-
         createAccountFormSubmit: function () {
             var user = this.getNewAccontInformation();
 
@@ -257,17 +355,70 @@
             });
         },
 
-        logoutUser: function () {
-            this.auth.logout()
-            .then(() => {
-                this.updateNavMenuOnUserContext();
+
+        //==========[ render functions ]===========
+        renderFavorites: function (stocks) {
+            var $panel = $('#favorites-panel'),
+                $collection = $panel.find('.collection'),
+                $noStock = $panel.find('.no-stock');
+
+            $collection.empty();
+
+            if (!stocks || stocks.length === 0) {
+                $collection.hide();
+                $noStock.show();
+                return;
+            }
+
+            $collection.hide();
+            $noStock.hide();
+
+            stocks.forEach((stock) => {
+                var $stocksListItem;
+
+                $stocksListItem = this.templates.stockItem({
+                    isFavorite: true,
+                    isNegative: (stock.change < 0),
+                    displayName: stock.name + ' ' + stock.symbol,
+                    stock: stock 
+                });
+
+                $collection.append($stocksListItem);
             });
+
+            $collection.show();
+        },
+
+        renderTrending: function (trendings) {
+            var $panel = $('#trending-panel'),
+                $collection = $panel.find('.collection'),
+                $noStock = $panel.find('.no-stock');
+
+            $collection.empty();
+
+            if (!trendings || trendings.length === 0) {
+                $collection.hide();
+                $noStock.show();
+                return;
+            }
+
+            $collection.hide();
+            $noStock.hide();
+
+            trendings.forEach((trending) => {
+                var $stocksListItem;
+
+                $stocksListItem = this.templates.stockItem({
+                    isFavorite: false,
+                    isNegative: (trending.change < 0),
+                    displayName: trending.name + ' ' + trending.symbol,
+                    stock: trending 
+                });
+
+                $collection.append($stocksListItem);
+            });
+
+            $collection.show();
         }
     };
 }());
-
-$( document ).ready(function() {
-    $(".dropdown-button").dropdown({
-            hover: false
-        });
-});
