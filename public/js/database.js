@@ -4,12 +4,14 @@
     var collectionNames = {
         users: '/users',
         stocks: '/stocks',
-        trending: '/trending',
+        trending: '/trendings',
     };
 
 
     EZSTOCKS.database = {
-        fdb: null, 
+        fdb: null,
+
+        trendingSize: 10,
 
         init: function (firebaseDb) {
             this.fdb = firebaseDb;
@@ -36,127 +38,45 @@
                 .set(user);
         },
 
-        //temporary function to save fake stocks to database
-        addStockToDatabase: function () {
-            this.fdb.ref(collectionNames.stocks).set(
-            {
-                Google: {
-                    name: 'Google',
-                    symbol: 'GOOG',
-                    lastPrice: 930.55,
-                    change: 0.33,
-                    closedPrice: 930.50,
-                    daysHigh: 937.45,
-                    daysLow: 929.26,
-                },
+        increaseTrendingScore: function (stock) {
+            var id = stock.Symbol,
+                ref = this.fdb.ref(collectionNames.stocks + '/' + id);
 
-                Netflix: {
-                    name: 'Netflix',
-                    symbol: 'NFLX',
-                    lastPrice: 930.55,
-                    change: 0.33,
-                    closedPrice: 930.50,
-                    daysHigh: 937.45,
-                    daysLow: 929.26,
-                },
+            return ref
+            .once('value')
+            .then((dbs) => {
+                var result = dbs.val();
 
-                 Amazon: {
-                    name: 'Amazon',
-                    symbol: 'AMZN',
-                    lastPrice: 930.55,
-                    change: 0.33,
-                    closedPrice: 930.50,
-                    daysHigh: 937.45,
-                    daysLow: 929.26,
-                },
+                if (result === null) {
+                    result = stock;
+                }
 
-                 Facebook: {
-                    name: 'Facebook',
-                    symbol: 'FB',
-                    lastPrice: 930.55,
-                    change: 0.33,
-                    closedPrice: 930.50,
-                    daysHigh: 937.45,
-                    daysLow: 929.26,
-                },
+                if (!result.hasOwnProperty('trendingScore')) {
+                    result.trendingScore = 0;
+                }
 
-                 Apple: {
-                    name: 'Apple',
-                    symbol: 'AAPL',
-                    lastPrice: 930.55,
-                    change: 0.33,
-                    closedPrice: 930.50,
-                    daysHigh: 937.45,
-                    daysLow: 929.26,
-                },
+                result.trendingScore += 1;
+                stock.trendingScore = result.trendingScore;
+
+                return ref.set(result);
             });
-        },
-
-        //temporary function to save fake trending stocks to database
-        addTrendingToDatabase: function () {
-           this.fdb.ref(collectionNames.trending).set(
-            {
-                Herbalife: {
-                    name: 'Herbalife',
-                    symbol: 'HLF',
-                    lastPrice: 930.55,
-                    change: 0.33,
-                    closedPrice: 930.50,
-                    daysHigh: 937.45,
-                    daysLow: 929.26,
-                },
-
-                FireEye: {
-                    name: 'FireEye',
-                    symbol: 'FEYE',
-                    lastPrice: 930.55,
-                    change: 0.33,
-                    closedPrice: 930.50,
-                    daysHigh: 937.45,
-                    daysLow: 929.26,
-                },
-
-                 Intel: {
-                    name: 'Intel Corporation',
-                    symbol: 'INTC',
-                    lastPrice: 930.55,
-                    change: 0.33,
-                    closedPrice: 930.50,
-                    daysHigh: 937.45,
-                    daysLow: 929.26,
-                },
-            }); 
-        },
-
-        //TODO
-        getStocks: function () {
-            return this.fdb
-                .ref(collectionNames.stocks)
-                .once('value')
-                .then((dbs) => {
-                    var stocks = [];
-
-                    dbs.forEach((child) => { 
-                        stocks.push(child.val()); 
-                    });
-
-                    return stocks;
-                });
         },
 
         getTrending: function () {
             return this.fdb
-                .ref(collectionNames.trending)
+                .ref(collectionNames.stocks)
+                .orderByChild('trendingScore')
+                .limitToLast(this.trendingSize)
                 .once('value')
                 .then((dbs) => {
                     var trendings = [];
 
-                dbs.forEach((child) => {
-                    trendings.push(child.val());
-                });
+                    dbs.forEach((d) => {
+                        trendings.push(d.val());
+                    });
 
-                return trendings;
-            });
+                    return trendings.reverse();
+                });
         }
     };
 }());

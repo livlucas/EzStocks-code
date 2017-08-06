@@ -3,15 +3,22 @@
 
     EZSTOCKS.auth = {
         fauth: null, 
-        db: null, 
+        db: null,
+        $: null,
+
+        functionsEndpoint: null,
 
         _loggedUser: null,
         _initAuthPromise: null,
 
-        init: function (firebaseAuth, appDb) {
+        init: function (config, firebaseAuth, appDb, jQuery) {
+            this.functionsEndpoint = config.functionsEndpoint;
+
             this.fauth = firebaseAuth;
 
             this.db = appDb;
+
+            this.$ = jQuery;
 
             this.bindEvents();
         },
@@ -61,6 +68,18 @@
 
         getLoggedUserUid: function () {
             return this.fauth.currentUser.uid;
+        },
+
+        forgotPassword: function (email) {
+            var url = this.functionsEndpoint + '/forgot-password';
+            return $.post(url, {
+                email: email
+            });
+        },
+
+        resetPassword: function (data) {
+            var url = this.functionsEndpoint + '/reset-password';
+            return $.post(url, data);
         },
 
         login: function(user) {

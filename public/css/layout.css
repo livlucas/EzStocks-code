@@ -1,0 +1,246 @@
+h4 {
+    color: #aaacaf;
+    padding: 15px;
+}
+
+.forgot-password {
+    color: black;
+}
+
+.js-page {
+    display: none;
+}
+
+.no-stock,
+.no-trending {
+    padding: 24px;
+}
+
+#dashboard-page {
+    margin-top: -24px;
+}
+
+.nav-user-name {
+    opacity: 0.75;
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+/* materialize theme */
+#ezstocks-theme .prefix {
+    position: relative;
+    width: 2.5rem;
+    line-height: 3rem;
+    vertical-align: middle;
+}
+
+#ezstocks-theme .prefix ~ input {
+    margin-left: 0;
+}
+
+#ezstocks-theme .navbar-fixed {
+    margin-bottom: 56px;
+}
+
+#ezstocks-theme  .nav-wrapper li {
+    display: none;
+}
+
+#ezstocks-theme .collection {
+    border: 0;
+}
+
+#dashboard-page .collection li {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#dashboard-page .stock-item:hover .stock-title {
+    color: #3f51b5 !important;
+}
+#dashboard-page .stock-item:hover .stock-detail {
+    background: #e8eaf6;
+}
+#dashboard-page .stock-item:hover .material-icons.delete,
+#dashboard-page .stock-item:hover .add-stock,
+#stock-search-result .card-content:hover .add-stock {
+    display: block;
+}
+.material-icons.delete:hover,
+.add-stock:hover {
+    cursor: pointer;
+}
+.material-icons.add-stock:hover {
+    color: #3f51b5 !important;
+}
+
+#dashboard-page .autocomplete-content.dropdown-content {
+    position: absolute;
+}
+#dashboard-page .stock-item {
+    position: relative;
+    margin-top: 12px;
+}
+#dashboard-page .stock-item .material-icons.add-stock {
+    color: #bbb;
+}
+#dashboard-page .card-title .material-icons {
+    vertical-align: bottom;
+}
+
+.stock-item .material-icons.delete,
+.stock-item .add-stock,
+#stock-search-result .add-stock {
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    display: none;
+    position: absolute;
+    right: 0;
+}
+#stock-search-result .add-stock {
+    right: 24px;
+    color: #3f51b5
+}
+
+.stock-item .add-stock {
+    width: 24px;
+}
+
+.stock-item .material-icons.delete {
+    color: #d32f2f;
+}
+
+.stock-item .material-icons {
+    color: #388e3c;
+    vertical-align: bottom;
+}
+.stock-item .material-icons b::before {
+    content: "trending_up";
+}
+
+.stock-item.neg .material-icons {
+    color: #d32f2f;
+}
+.stock-item.neg .material-icons b::before {
+    content: "trending_down";
+}
+
+.stock-item.neg .stock-change {
+    color: #d32f2f;
+}
+
+.stock-title {
+    font-weight: 500;
+}
+.stock-current-value {
+    font-size: 1.5rem;
+}
+.stock-change {
+    font-size: 1rem;
+    color: #388e3c;
+    font-weight: 800;
+}
+.stock-details {
+    margin-top: 8px;
+}
+.stock-details .stock-detail {
+    float: left;
+    box-sizing: border-box;
+    padding: 4px;
+    margin-right: 1%;
+    background: #f4f4f4;
+    width: 32.5%;
+}
+.stock-details .stock-detail:last-child {
+    margin: 0;
+}
+.stock-detail .stock-label {
+    display: block;
+    font-size: 0.85rem;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #aaa;
+
+}
+.stock-details::after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+
+#login-page .container {
+    margin: 0 auto;
+    padding: 24px 48px;
+    border: 1px solid #EEE;
+    box-sizing: border-box;
+    width: 40%;
+    min-width: 300px;
+    max-width: 420px;
+}
+
+@media only screen and (min-width : 993px) {
+    .nav-wrapper {
+        padding: 0 24px;
+    }
+}
+.search-area .input-field {
+    height: 42px;
+}
+.search-area .input-field input {
+    z-index: 11000;
+    position: relative;
+}
+
+#stock-search-result {
+    position: relative;
+    z-index: 10000;
+    margin-top: -16px;
+    margin-left: 2.5rem;
+    box-shadow: 0 4px 6px 0 rgba(0,0,0,0.3), 0 0 12px 0 rgba(0,0,0,0.3);
+}
+
+.search-area .backdrop-ezstocks {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+#stock-search-result .card-content {
+    z-index: 10;
+    position: relative;
+    padding: 12px 24px;
+    cursor: pointer;
+}
+#stock-search-result .material-icons {
+    line-height: 2.4rem;
+}
+#stock-search-result .card-content .stock-title {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.2rem;
+}
+#stock-search-result .card-content .current-value {
+    display: inline-block;
+    font-size: 1.2rem;
+    vertical-align: middle;
+    padding-left: 8px;
+    color: #388e3c;
+}
+#stock-search-result .card-content.neg .current-value {
+    color: #d32f2f;
+}
+#no-search-result .card-title{
+    color: #aaa;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+.empty {
+    font-style: italic;
+    color: #aaa;
+}

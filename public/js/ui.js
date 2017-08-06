@@ -2,6 +2,8 @@
     "use strict";
 
     EZSTOCKS.ui = {
+        toastDelayTime: 4000,
+
         auth: null,
         db: null,
         defaultPage: 'login-page',
@@ -12,17 +14,37 @@
             anonymous: ['create-account', 'login']
         },
 
+        //this is not used to generate the html
+        securityQuestion: [
+            "What is your pet’s name?",
+            "In what city or town does your nearest sibling live?",
+            "What's your best friends name?",
+            "What's the name of your favorite city?",
+            "Who is your childhood sports hero?",
+            "What was the make and model of your first car?",
+            "In what town was your first job?",
+            "What was the name of the company where you had your first job?"
+        ],
+
         templates:{},
 
         data: {
             favorites: null,
-            trending: null
+            trending: null,
+            currentSearchResult: null,
+            forgotPassword: {
+                step: 1,
+                questionIndex: null
+            }
         },
 
         //==========[ initializations ]===========
-        init: function (auth, db) {
+        init: function (auth, db, api) {
+            var pageToNav = this.defaultPage;
+
             this.auth = auth;
             this.db = db;
+            this.api = api;
 
             //template engine
             this.initHandlebars();
@@ -37,15 +59,11 @@
             this.auth
             .getInitialUserState()
             .then((user) => {
-                var pageToNav = this.defaultPage;
-
                 this.updateNavMenuOnUserContext();
                 this.updateForms();
 
-                if (user) {
-                    pageToNav = this.loggedPage;
-                }
-                //default page
+                if (user) pageToNav = this.loggedPage;
+                
                 this.navigateToPage(pageToNav);
             });
         },
@@ -67,22 +85,6 @@
             $(".dropdown-button").dropdown({
                 hover: false
             });
-
-            //TODO: need refactoring later
-            $('#stock-search').autocomplete({
-                data: {
-                  "Apple": null,
-                  'Adobe': null,
-                  'Application': null,
-                  "Microsoft": null,
-                  "Google": 'https://placehold.it/250x250',
-                  'Russel': null,
-                  'Dow Jones': null,
-                },
-                onAutocomplete: (value) => {}, // on select value
-                limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-                minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-            });
         },
 
         compileTemplates: function () {
@@ -91,7 +93,11 @@
             html = $('#stock-item-template').html();
             this.templates.stockItem = Handlebars.compile(html);
 
-            //add more here
+            html = $('#search-result-template').html();
+            this.templates.searchResult = Handlebars.compile(html);
+
+            html = $('#forgot-password-second-step-template').html();
+            this.templates.forgotPasswordSecondStep = Handlebars.compile(html);
         },
 
         bindEvents: function () {
@@ -112,6 +118,11 @@
             $('body').on('click', '.js-nav-login-page', (e) => {
                 e.preventDefault();
                 this.navigateToPage('login-page');
+            });
+
+            $('body').on('click', '.js-nav-forgot-password', (e) => {
+                e.preventDefault();
+                this.navigateToPage('forgot-password-page');
             });
 
             $('body').on('click', '.js-logout', (e) => {
@@ -137,6 +148,11 @@
                 this.createAccountFormSubmit();
             });
 
+            $('#forgot-password-form').on('submit', (e) => {
+                e.preventDefault();
+                this.forgotPasswordFormSubmit();
+            });
+
             $('#login-form').on('submit', (e) => {
                 e.preventDefault();
                 this.loginFormSubmit();
@@ -148,22 +164,45 @@
             });
 
             $('#favorites-panel').on('click', '.delete', (e) => {
-                var target = $(e.target);
+                var $target = $(e.target),
+                    symbol = $target.data('symbol');
 
-                e.preventDefault();
-                console.log(this.data.favorites);
-                //inserir atributo pra facilitar a minha vida
-                //manipular a lista de favorites e renderiza-la aqui.a lista tá em data.
-                // target.parent().remove();
-                console.log(target);
+                this.removeFavoriteStock(symbol);
             });
 
             $('#trending-panel').on('click', '.add-stock', (e) => {
-                var target = $(e.target);
+                var $target = $(e.target),
+                    symbol = $target.data('symbol'),
+                    stock;
 
-                e.preventDefault();
-                //after saving on database update updateStockList
-                this.updateStockList();
+                stock = this.data.trending
+                    .find((stock) => stock.Symbol === symbol);
+
+                this.addFavoriteStock(stock);
+            });
+
+            $('#stock-search').on('focus', (e) => {
+                e.target.select();
+            });
+
+            $('#stock-search').on('keydown', (e) => {
+                var symbol;
+
+                if (e.keyCode !== 13) return;
+
+                symbol = $(e.target).val().trim();
+                this.searchStockQuery(symbol);
+            });
+
+            $('#stock-search-result').on('click', '.backdrop-ezstocks', (e) => {
+                this.hideSearchResult();
+            });
+
+            $('#stock-search-result .result-container').on('click', (e) =>{
+                if (!this.data.currentSearchResult) return;
+
+                this.addFavoriteStock(this.data.currentSearchResult);
+                this.hideSearchResult();
             });
         },
 
@@ -176,8 +215,7 @@
 
             this.updateNavMenu(pageId);
             this.updateForms();
-            this.updateStockList(pageId);
-            this.updateTrendingList(pageId);
+            this.renderPage(pageId);
 
             $('.js-page').hide();
             $page.fadeIn();
@@ -213,26 +251,27 @@
             $('.js-nav-menu .js-nav-' + pageId).addClass('active');
         },
 
-        updateStockList: function (pageId) {
-            if (pageId !== 'dashboard-page') return;
+        updateData: function () {
+            var user = this.auth.getLoggedUser();
 
-            this.db.getStocks()
-            .then((stocks) => {
-                this.data.favorites = stocks;
+            if (!user) return Promise.resolve();
 
-                this.renderFavorites(stocks);
-            });
+            this._setFavorites(user.favorites || {});
+
+            return this.db.getTrending()
+                .then((trendings) => this._setTrending(trendings));
         },
 
-        updateTrendingList: function (pageId) {
-            if (pageId !== 'dashboard-page') return;
-
-            this.db.getTrending()
-            .then((trendings) => {
-                this.data.trending = trendings;
-
-                this.renderTrending(trendings);
-            });
+        renderPage: function (pageId) {
+            switch (pageId) {
+                case 'dashboard-page':
+                    this.updateData()
+                    .then(() => {
+                        this.renderFavorites();
+                        this.renderTrending();
+                    });
+                break;
+            }
         },
 
         setNavUsername: function () {
@@ -250,6 +289,8 @@
 
             this.clearLoginForm();
             this.clearSignUpForm();
+            this.clearSearchForm();
+            this.clearForgotPasswordForm();
             this.fillEditForm();
         },
 
@@ -257,6 +298,7 @@
             this.auth.logout()
             .then(() => {
                 this.updateNavMenuOnUserContext();
+                Materialize.toast('Logged out succesfully', this.toastDelayTime);
             });
         },
 
@@ -283,6 +325,70 @@
             };
         },
 
+        forgotPasswordFormSubmit: function () {
+            var $form =  $('#forgot-password-form'),
+                values = $form.inputValues(),
+                fp = this.data.forgotPassword;
+
+            if (fp.step === 1) {
+                this.auth.forgotPassword(values.email.trim())
+                .then((result) => {
+                    var question;
+
+                    if (!result.success) {
+                        Materialize.toast(
+                            $('<span class="red-text text-lighten-4">Email not found</span>'),
+                        this.toastDelayTime);
+                        return;
+                    }
+
+                    fp.step = 2;
+                    fp.questionIndex = parseInt(result.questionIndex, 10);
+
+                    $form.find('.first-step').hide();
+
+                    question = this.securityQuestion[fp.questionIndex - 1];
+                    this.renderForgotPasswordSecondStep(question);
+                });
+            } else if (fp.step === 2) {
+                values.questionIndex = fp.questionIndex;
+
+                this.auth.resetPassword(values)
+                .then((result) => {
+                    if (!result.success) {
+                        Materialize.toast(
+                            $('<span class="red-text text-lighten-4">' + result.message + '</span>'),
+                        this.toastDelayTime);
+                        return;
+                    }
+
+                    this.auth
+                    .login({
+                        email: values.email,
+                        password: values.newPassword
+                    })
+                    .then((user) => {
+                        this.updateNavMenuOnUserContext();
+                        this.navigateToPage('dashboard-page');
+
+                        Materialize.toast(
+                            $('Password changed succesfully'),
+                        this.toastDelayTime);
+                    });
+                });
+            }
+        },
+
+        clearForgotPasswordForm: function () {
+            $('#forgot-password-form')[0].reset();
+            $('#forgot-password-form .second-step').empty();
+
+            $('#forgot-password-form .first-step').show();
+
+            this.data.forgotPassword.step = 1;
+            this.data.forgotPassword.question = null;
+        },
+
         loginFormSubmit: function () {
             var userData = this.getLoginInformation();
 
@@ -304,6 +410,10 @@
 
         clearSignUpForm: function () {
             $('#create-account-form')[0].reset();
+        },
+
+        clearSearchForm: function () {
+            $('#stock-search').val('');
         },
 
         fillEditForm: function () {
@@ -340,7 +450,7 @@
 
                 //navigating to dashboard
                 this.navigateToPage('dashboard-page');
-                Materialize.toast('Updated succesfully', 4000);
+                Materialize.toast('Updated succesfully', this.toastDelayTime);
             });
         },
 
@@ -355,10 +465,119 @@
             });
         },
 
+        searchStockQuery: function (symbol) {
+            this.api
+            .queryBySymbol(symbol)
+            .then((stock) => {
+                if (stock === null) {
+                    $('#stock-search-result .result-container').empty();
+                    $('#no-search-result').removeClass('hide');
+                    this.showSearchResult(false);
+                    return;
+                }
+
+                this.data.currentSearchResult = stock;
+                this.renderSearchResult(stock);
+                this.showSearchResult(true);
+
+                try {
+                    this.db.increaseTrendingScore(stock);
+                } catch (e) {
+                    console.log('Error updating trending score', e, stock);
+                }
+            })
+        },
+
+        addFavoriteStock: function (stock) {
+            var user = this.auth.getLoggedUser(),
+                uid;
+
+            if (!user) return;
+
+            if (!user.favorites) user.favorites = {};
+
+            if (user.favorites.hasOwnProperty(stock.Symbol)) {
+                Materialize.toast(stock.Name + " already in favorites.", this.toastDelayTime);
+                return;
+            }
+
+            user.favorites[stock.Symbol] = stock;
+            uid = this.auth.getLoggedUserUid();
+
+            this.db.saveUser(user, uid)
+            .then(() => {
+                Materialize.toast(stock.Name + " added to favorite.", this.toastDelayTime);
+
+                this._addFavorite(stock);
+                this.renderFavorites();
+            });
+        },
+
+        removeFavoriteStock: function (symbol) {
+            var user = this.auth.getLoggedUser(),
+                uid = this.auth.getLoggedUserUid(),
+                stock;
+
+            if (!user) return;
+
+            stock = user.favorites[symbol];
+            if (!stock) return;
+
+            delete user.favorites[symbol];
+
+            this.db.saveUser(user, uid)
+            .then(() =>{
+                Materialize.toast(symbol + ' removed from favorites.', this.toastDelayTime);
+                this._removeFavorite(stock);
+                this.renderFavorites();
+            });
+        },
+
+        _setFavorites: function (favorites) {
+            this._setDatalist('favorites', favorites);
+        },
+
+        _setTrending: function (trendings) {
+            this.data.trending = trendings;
+        },
+
+        _setDatalist: function (list, stocks) {
+            this.data[list] = [];
+
+            if (!stocks || Object.keys(stocks).length === 0) return;
+
+            Object.keys(stocks).forEach((key) => {
+                this.data[list].push(stocks[key]);
+            });
+        },
+
+        _addFavorite: function (stock) {
+            this.data.favorites = [stock].concat(this.data.favorites || []);
+        },
+
+        _removeFavorite: function (stock) {
+            var i = this.data.favorites.indexOf(stock);
+
+            this.data.favorites = this.data.favorites.slice(0, i)
+                .concat(this.data.favorites.slice(i + 1));
+        },
+
+        showSearchResult: function (hasResult) {
+            if (hasResult) $('#no-search-result').addClass('hide');
+            else $('#no-search-result').remove('hide');
+
+            $('#stock-search-result').removeClass('hide');
+        },
+
+        hideSearchResult: function () {
+            $('#stock-search-result').addClass('hide');
+        },
+
 
         //==========[ render functions ]===========
-        renderFavorites: function (stocks) {
-            var $panel = $('#favorites-panel'),
+        renderFavorites: function () {
+            var stocks = this.data.favorites,
+                $panel = $('#favorites-panel'),
                 $collection = $panel.find('.collection'),
                 $noStock = $panel.find('.no-stock');
 
@@ -378,8 +597,7 @@
 
                 $stocksListItem = this.templates.stockItem({
                     isFavorite: true,
-                    isNegative: (stock.change < 0),
-                    displayName: stock.name + ' ' + stock.symbol,
+                    isNegative: (stock.Change < 0),
                     stock: stock 
                 });
 
@@ -389,8 +607,9 @@
             $collection.show();
         },
 
-        renderTrending: function (trendings) {
-            var $panel = $('#trending-panel'),
+        renderTrending: function () {
+            var trendings = this.data.trending,
+                $panel = $('#trending-panel'),
                 $collection = $panel.find('.collection'),
                 $noStock = $panel.find('.no-stock');
 
@@ -410,8 +629,7 @@
 
                 $stocksListItem = this.templates.stockItem({
                     isFavorite: false,
-                    isNegative: (trending.change < 0),
-                    displayName: trending.name + ' ' + trending.symbol,
+                    isNegative: (trending.Change < 0),
                     stock: trending 
                 });
 
@@ -419,6 +637,33 @@
             });
 
             $collection.show();
+        },
+
+        renderSearchResult: function (stock) {
+            var $container = $('#stock-search-result .result-container'),
+                html;
+                
+            $container.empty();
+
+            html = this.templates.searchResult({
+                isNegative: (stock.Change < 0),
+                stock: stock
+            });
+
+            $container.append(html);
+        },
+
+        renderForgotPasswordSecondStep: function (question) {
+            var $container = $('#forgot-password-form .second-step'),
+                html;
+                
+            $container.empty();
+
+            html = this.templates.forgotPasswordSecondStep({
+                question: question
+            });
+
+            $container.append(html);
         }
     };
 }());

@@ -1,192 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style type="text/css">
-        h4 {
-            color: #aaacaf;
-            padding: 15px;
-        }
-
-        .forgot-password {
-            color: black;
-        }
-
-        .js-page {
-            display: none;
-        }
-
-        .no-stock,
-        .no-trending {
-            padding: 24px;
-        }
-
-        #dashboard-page {
-            margin-top: -24px;
-        }
-
-        .nav-user-name {
-            opacity: 0.75;
-            padding-right: 12px;
-            padding-left: 12px;
-        }
-
-        /* materialize theme */
-        #ezstocks-theme .prefix {
-            position: relative;
-            width: 2.5rem;
-            line-height: 3rem;
-            vertical-align: middle;
-        }
-
-        #ezstocks-theme .prefix ~ input {
-            margin-left: 0;
-        }
-
-        #ezstocks-theme .navbar-fixed {
-            margin-bottom: 56px;
-        }
-
-        #ezstocks-theme  .nav-wrapper li {
-            display: none;
-        }
-
-        #ezstocks-theme .collection {
-            border: 0;
-        }
-
-        #dashboard-page .collection li {
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        #dashboard-page .stock-item:hover .stock-title {
-            color: #3f51b5 !important;
-        }
-        #dashboard-page .stock-item:hover .stock-detail {
-            background: #e8eaf6;
-        }
-        #dashboard-page .stock-item:hover .material-icons.delete,
-        #dashboard-page .stock-item:hover .add-stock {
-            display: block;
-        }
-        .material-icons.delete:hover,
-        .add-stock:hover {
-            cursor: pointer;
-        }
-        .material-icons.add-stock:hover {
-            color: #3f51b5 !important;
-        }
-
-        #dashboard-page .autocomplete-content.dropdown-content {
-            position: absolute;
-        }
-        #dashboard-page .stock-item {
-            position: relative;
-            margin-top: 12px;
-        }
-        #dashboard-page .stock-item .material-icons.add-stock {
-            color: #bbb;
-        }
-        #dashboard-page .card-title .material-icons {
-            vertical-align: bottom;
-        }
-
-        .stock-item .material-icons.delete,
-        .stock-item .add-stock {
-            cursor: pointer;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            display: none;
-            position: absolute;
-            right: 0;
-        }
-
-        .stock-item .add-stock {
-            width: 24px;
-        }
-
-        .stock-item .material-icons.delete {
-            color: #d32f2f;
-        }
-
-        .stock-item .material-icons {
-            color: #388e3c;
-            vertical-align: bottom;
-        }
-        .stock-item .material-icons b::before {
-            content: "trending_up";
-        }
-
-        .stock-item.neg .material-icons {
-            color: #d32f2f;
-        }
-        .stock-item.neg .material-icons b::before {
-            content: "trending_down";
-        }
-
-        .stock-item.neg .stock-change {
-            color: #d32f2f;
-        }
-
-        .stock-title {
-            font-weight: 500;
-        }
-        .stock-current-value {
-            font-size: 1.5rem;
-        }
-        .stock-change {
-            font-size: 1rem;
-            color: #388e3c;
-            font-weight: 800;
-        }
-        .stock-details {
-            margin-top: 8px;
-        }
-        .stock-details .stock-detail {
-            float: left;
-            box-sizing: border-box;
-            padding: 4px;
-            margin-right: 1%;
-            background: #f4f4f4;
-            width: 32.5%;
-        }
-        .stock-details .stock-detail:last-child {
-            margin: 0;
-        }
-        .stock-detail .stock-label {
-            display: block;
-            font-size: 0.85rem;
-            width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #aaa;
-
-        }
-        .stock-details::after {
-            display: block;
-            content: '';
-            clear: both;
-        }
-        
-
-        #login-page .container {
-            margin: 0 auto;
-            padding: 24px 48px;
-            border: 1px solid #EEE;
-            box-sizing: border-box;
-            width: 40%;
-            min-width: 300px;
-            max-width: 420px;
-        }
-
-        @media only screen and (min-width : 993px) {
-            .nav-wrapper {
-                padding: 0 24px;
-            }
-        }
-        </style>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>EzSTocks</title>
@@ -196,6 +10,8 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css"  media="screen,projection"/>
+
+        <link href="css/layout.css" rel="stylesheet" type="text/css">
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
@@ -371,7 +187,7 @@
                             <label for="password">Enter your password</label>
                         </div>
                         <label style="float: right;">
-                            <a class="forgot-password" href="#!"><b>Forgot Password?</b></a>
+                            <a class="forgot-password js-nav-forgot-password" href="#!"><b>Forgot Password?</b></a>
                         </label>
                     </div>
 
@@ -386,13 +202,49 @@
             </div>
         </div>
 
+        <div id="forgot-password-page" class="js-page">
+            <div class="container">
+                <div class="row">
+                     <h5 class="indigo-text">Forgot password?</h5>
+                </div>
+
+                <form id="forgot-password-form" class="col s12" method="post">
+                    <div class="first-step">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input class="validate" type="email" name="email" id="forgot-password-email" required/>
+
+                                <label for="forgot-password-email">Enter your email</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <button type="submit" name="btn_forgot" class="col s12 m12 l4 btn btn-large waves-effect indigo">Confirm</button>
+                        </div>
+                    </div>
+
+                    <!-- dynamically created -->
+                    <div class="second-step"></div>
+                </form>
+            </div>
+        </div>
+
         <div id="dashboard-page" class="js-page">
             <div class="container">
                 <div class="search-area row">
                     <div class="col s12">
                         <div class="input-field">
-                            <i class="material-icons prefix">search</i>
-                            <input type="text" id="stock-search" class="autocomplete" placeholder="search...">
+                            <i class="material-icons prefix">search</i><input type="text" id="stock-search" class="autocomplete" placeholder="search by symbol...">
+
+                            <div class="card hide" id="stock-search-result">
+                                <div class="backdrop-ezstocks"></div>
+
+                                <div class="result-container"></div>
+
+                                <div class="card-content hide" id="no-search-result">
+                                    <h6 class="card-title">No stock found with this symbol.</h6>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -546,36 +398,84 @@
         <script id="stock-item-template" type="text/x-handlebars-template">
             <li class="collection-item stock-item {{#if isNegative}} neg {{/if}}">
                 {{#if isFavorite}}
-                    <i class="material-icons delete" title="Remove stock from favorites">close</i>
+                    <i class="material-icons delete" title="Remove stock from favorites" data-symbol={{stock.Symbol}}>close</i>
                 {{else}}
-                    <i class="material-icons add-stock" title="Add stock to favorites">add</i>
+                    <i class="material-icons add-stock" title="Add stock to favorites" data-symbol={{stock.Symbol}}>add</i>
                 {{/if}}
 
-                <h6 class="stock-title grey-text text-darken-2">{{displayName}}</h6>
+                <h6 class="stock-title grey-text text-darken-2">{{stock.Name}} ({{stock.Symbol}})</h6>
 
                 <div class="stock-current-value">
                     <i class="material-icons"><b></b></i>
-                    {{formatNumber stock.lastPrice style="currency" currency="USD"}} 
-                    <span class="stock-change">{{formatNumber stock.change style="currency" currency="USD"}}</span>
+                    {{formatNumber stock.LastTradePriceOnly style="currency" currency="USD"}} 
+                    <span class="stock-change">{{formatNumber stock.Change style="currency" currency="USD"}}</span>
                 </div>
 
                 <div class="stock-details">
                     <div class="stock-detail">
-                        {{formatNumber stock.closedPrice style="currency" currency="USD"}}
-                        <span class="stock-label">Closed price</span>
+                        {{#if stock.MarketCapitalization}}
+                            {{formatNumber stock.MarketCapitalization style="currency" currency="USD"}}
+                        {{else}}
+                            <span class="empty">none</span>
+                        {{/if}}
+                        <span class="stock-label">Market Cap</span>
                     </div>
 
                     <div class="stock-detail">
-                        {{formatNumber stock.daysHigh style="currency" currency="USD"}}
+                        {{formatNumber stock.DaysHigh style="currency" currency="USD"}}
                         <span class="stock-label">Day's high</span>
                     </div>
 
                     <div class="stock-detail">
-                        {{formatNumber stock.daysLow style="currency" currency="USD"}}
+                        {{formatNumber stock.DaysLow style="currency" currency="USD"}}
                         <span class="stock-label">Day's low</span>
                     </div>
                 </div>
             </li>
+        </script>
+
+        <!--
+            isNegative
+            displayName
+            stock
+        -->
+        <script id="search-result-template" type="text/x-handlebars-template">
+            <div class="card-content {{#if isNegative}} neg {{/if}}" title="Add stock to favorites">
+                <i class="material-icons add-stock">add</i>
+
+                <h6 class="stock-title grey-text text-darken-2">{{stock.Name}} ({{stock.Symbol}})</h6>
+
+                <div class="current-value">{{formatNumber stock.LastTradePriceOnly style="currency" currency="USD"}}</div>
+            </div>
+        </script>
+
+        <!--
+            question
+        -->
+        <script id="forgot-password-second-step-template" type="text/x-handlebars-template">
+            <div class="row">
+                <h5>{{question}}</h5>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input class="validate" type="text" name="answer" id="forgot-password-answer" required/>
+
+                    <label for="forgot-password-answer">Answer</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input class="validate" type="password" name="newPassword" id="forgot-password-new" required/>
+
+                    <label for="forgot-password-new">New password</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" name="btn_forgot" class="col s12 m12 l4 btn btn-large waves-effect indigo">Reset password</button>
+            </div>
         </script>
 
         <!-- Scripts area -->
