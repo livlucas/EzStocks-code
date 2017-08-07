@@ -144,23 +144,31 @@
 
             //forms
             $('#create-account-form').on('submit', (e) => {
+                var $form = $(e.target);
                 e.preventDefault();
-                this.createAccountFormSubmit();
+
+                this.createAccountFormSubmit($form);
             });
 
             $('#forgot-password-form').on('submit', (e) => {
-                e.preventDefault();
-                this.forgotPasswordFormSubmit();
+                var $form = $(e.target);
+                e.preventDefault($form);
+
+                this.forgotPasswordFormSubmit($form);
             });
 
             $('#login-form').on('submit', (e) => {
+                var $form = $(e.target);
                 e.preventDefault();
-                this.loginFormSubmit();
+
+                this.loginFormSubmit($form);
             });
 
             $('#edit-account-form').on('submit', (e) => {
+                var $form = $(e.target);
                 e.preventDefault();
-                this.editFormSubmit();
+
+                this.editFormSubmit($form);
             });
 
             $('#favorites-panel').on('click', '.delete', (e) => {
@@ -203,6 +211,7 @@
 
                 this.addFavoriteStock(this.data.currentSearchResult);
                 this.hideSearchResult();
+                $('#stock-search').val('').focus();
             });
         },
 
@@ -280,12 +289,15 @@
             if (!user) return;
 
             $('#nav-display-username').text(user.name);
+            $('#mobile-nav-display-username').text(user.name);
         },
 
         updateForms: function () {
             var user = this.auth.getLoggedUser();
 
             if (!user) return;
+
+            $('[type="submit"]').attr('disabled', false);
 
             this.clearLoginForm();
             this.clearSignUpForm();
@@ -325,10 +337,12 @@
             };
         },
 
-        forgotPasswordFormSubmit: function () {
-            var $form =  $('#forgot-password-form'),
-                values = $form.inputValues(),
-                fp = this.data.forgotPassword;
+        forgotPasswordFormSubmit: function ($form) {
+            var values = $form.inputValues(),
+                fp = this.data.forgotPassword,
+                $submitButton = $form.find('[type="submit"]');
+
+            $submitButton.attr('disabled', true);
 
             if (fp.step === 1) {
                 this.auth.forgotPassword(values.email.trim())
@@ -336,6 +350,7 @@
                     var question;
 
                     if (!result.success) {
+                        $submitButton.attr('disabled', false);
                         Materialize.toast(
                             $('<span class="red-text text-lighten-4">Email not found</span>'),
                         this.toastDelayTime);
@@ -356,6 +371,7 @@
                 this.auth.resetPassword(values)
                 .then((result) => {
                     if (!result.success) {
+                        $submitButton.attr('disabled', false);
                         Materialize.toast(
                             $('<span class="red-text text-lighten-4">' + result.message + '</span>'),
                         this.toastDelayTime);
@@ -371,9 +387,7 @@
                         this.updateNavMenuOnUserContext();
                         this.navigateToPage('dashboard-page');
 
-                        Materialize.toast(
-                            $('Password changed succesfully'),
-                        this.toastDelayTime);
+                        Materialize.toast('Password changed succesfully', this.toastDelayTime);
                     });
                 });
             }
@@ -389,14 +403,18 @@
             this.data.forgotPassword.question = null;
         },
 
-        loginFormSubmit: function () {
-            var userData = this.getLoginInformation();
+        loginFormSubmit: function ($form) {
+            var userData = this.getLoginInformation(),
+                $submitButton = $form.find('[type="submit"]');
 
             this.auth
             .login(userData)
             .then((user) => {
                 if (!user) {
                     $('#login-form input[text]:first').focus();
+                    $submitButton.attr('disabled', false);
+
+                    Materialize.toast('Invalid email or password', this.toastDelayTime);
                     return;
                 }
                 this.updateNavMenuOnUserContext();
@@ -430,11 +448,12 @@
             $form.find('select').material_select('update');
         },
 
-        editFormSubmit: function () {
-            var $form,
-                user, uid;
+        editFormSubmit: function ($form) {
+            var user, uid,
+                $submitButton = $form.find('[type="submit"]');
 
-            $form = $('#edit-account-form');
+            $submitButton.attr('disabled', true);
+
             user = $form.inputValues();
 
             delete user.email;
@@ -454,8 +473,11 @@
             });
         },
 
-        createAccountFormSubmit: function () {
-            var user = this.getNewAccontInformation();
+        createAccountFormSubmit: function ($form) {
+            var user = this.getNewAccontInformation(),
+                $submitButton = $form.find('[type="submit"]');
+
+            $submitButton.attr('disabled', true);
 
             this.auth
             .createUser(user)

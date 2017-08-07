@@ -42,6 +42,10 @@ h4 {
     margin-bottom: 56px;
 }
 
+#ezstocks-theme .side-nav {
+    z-index: 20000;
+}
+
 #ezstocks-theme  .nav-wrapper li {
     display: none;
 }

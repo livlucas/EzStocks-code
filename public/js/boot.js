@@ -14,7 +14,7 @@
             },
 
             auth: {
-                functionsEndpoint: 'https://us-central1-testproject-hk.cloudfunctions.net/app'
+                functionsEndpoint: 'https://us-central1-ezstocks-f62f9.cloudfunctions.net/app'
             }
         },
         db, auth;

@@ -26,7 +26,7 @@ app.post('/forgot-password', (req, res) => {
             res.setHeader('Content-Type', 'application/json');
 
             if (result !== null) {
-                key = Object.keys(result);
+                key = Object.keys(result).pop();
                 user = result[key];
 
                 if (user.email === email) {
