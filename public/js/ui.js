@@ -440,7 +440,6 @@
             var user = this.auth.getLoggedUser();
 
             user.password = '';
-
             $form.inputValues(user);
 
             //materialize updates required
@@ -475,9 +474,20 @@
 
         createAccountFormSubmit: function ($form) {
             var user = this.getNewAccontInformation(),
-                $submitButton = $form.find('[type="submit"]');
+                $submitButton = $form.find('[type="submit"]'),
+                firstQuestion = $('#select-first-question').val(),
+                secondQuestion = $('#select-second-question').val(),
+                thirdQuestion = $('#select-third-question').val();
 
-            $submitButton.attr('disabled', true);
+            //$submitButton.attr('disabled', true);
+
+            if (firstQuestion === secondQuestion
+                || (firstQuestion === thirdQuestion
+                || (secondQuestion === thirdQuestion))) {
+                 
+                Materialize.toast("You cannot repeat your security question. Please choose a different question!", this.toastDelayTime);
+                return;
+            }
 
             this.auth
             .createUser(user)

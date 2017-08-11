@@ -40,7 +40,7 @@
         queryBySymbol: function (symbol) {
             var query;
 
-            symbol = '"' + symbol + '"';
+            symbol = '"' + symbol.toLowerCase()  +'"';
 
             query = this._buildQuery(this.stockReference, 'symbol', symbol);
 
